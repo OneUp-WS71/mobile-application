@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'common/styles/styles.dart';
 import 'security/presentation/login/login_screen.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -12,12 +13,13 @@ class SplashScreen extends StatelessWidget {
             SizedBox(height: 10),
             Text('Elderly Care',
               style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-              color: Colors.white)),
+                  fontFamily: Styles.headingFont,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white)),
           ],
         ),
-        backgroundColor: Color(0xFF594ECF),
+        backgroundColor: Styles.primaryColor,
         duration: 3000,
         nextScreen: const LoginScreen(),
       splashIconSize: 300,
