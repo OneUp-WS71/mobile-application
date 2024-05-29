@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_application/common/styles/styles.dart';
+import 'package:mobile_application/security/presentation/register/register_keeper_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -186,7 +187,14 @@ class LoginScreen extends StatelessWidget {
                             'Don\'t have an account?',
                           ),
                           TextButton(
-                            onPressed: (){},
+                            onPressed: (){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const RegisterKeeperScreen(),
+                                ),
+                              );
+                            },
                             child: Text(
                               'Sign Up',
                               style: TextStyle(
