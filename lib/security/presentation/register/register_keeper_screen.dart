@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_application/common/styles/styles.dart';
 import 'package:mobile_application/security/presentation/register/terms_condition_screen.dart';
+import 'package:mobile_application/security/presentation/register/register_keeper_data_screen.dart';
 
 class RegisterKeeperScreen extends StatelessWidget {
   const RegisterKeeperScreen({Key? key}) : super(key: key);
@@ -221,7 +222,12 @@ class RegisterKeeperScreen extends StatelessWidget {
                             width: 250,
                             height: 50,
                             child: ElevatedButton(
-                              onPressed: (){},
+                              onPressed: (){
+                                Navigator.push(
+                                  context,
+                                MaterialPageRoute(builder: (context) =>  RegisterKeeperDataScreen()),
+                                );
+                              },
                               child: Text(
                                 'SIGN UP',
                                 style: TextStyle(
