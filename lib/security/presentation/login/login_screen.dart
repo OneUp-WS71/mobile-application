@@ -7,6 +7,10 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Container(
         decoration: BoxDecoration(
         color: Styles.primaryColor),
@@ -58,7 +62,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       Padding(
-                        padding:EdgeInsets.only(right: 280),
+                        padding:EdgeInsets.only(right: screenWidth * 0.60),
                         child: Text(
                           'Email',
                           style: TextStyle(
@@ -100,7 +104,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                       const SizedBox(height: 10),
                       Padding(
-                        padding:EdgeInsets.only(right: 250),
+                        padding:EdgeInsets.only(right: screenWidth * 0.50),
                         child: Text(
                           'Password',
                           style: TextStyle(
@@ -141,7 +145,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       Padding(
-                          padding:EdgeInsets.only(left: 200),
+                          padding:EdgeInsets.only(left: screenWidth * 0.40),
                           child: TextButton(
                             onPressed: (){},
                             child: Text(
