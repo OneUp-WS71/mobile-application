@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mobile_application/common/styles/styles.dart';
 
 class LoginScreen extends StatelessWidget {
+  static const String name = 'Login_screen';
+
   const LoginScreen({Key? key}) : super(key: key);
 
   @override

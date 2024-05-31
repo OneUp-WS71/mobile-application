@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_application/config/router/app_router.dart';
 import 'package:mobile_application/splash_screen.dart';
 import 'package:mobile_application/security/presentation/register/terms_condition_screen.dart';
 import 'package:mobile_application/security/presentation/login/login_screen.dart';
@@ -11,16 +12,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: //SplashScreen(),
-      //TermsConditionScreen(),
-      LoginScreen(),
+      routerConfig: appRouter,
 
     );
   }
