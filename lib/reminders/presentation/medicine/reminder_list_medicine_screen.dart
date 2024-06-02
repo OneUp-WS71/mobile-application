@@ -6,14 +6,9 @@ class ReminderListMedicineScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Styles.primaryColor,
-        title: const Text('Medicine Reminders'),
-      ),
-      body: const Center(
-        child: Text('Medicine Reminders'),
-      ),
-    );
+    return Text('Reminder List Medicine Screen');
   }
 }
+
+// Clase del item del reminder
+
