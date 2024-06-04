@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_application/elderlyProfile/presentation/profile/profile_screen.dart';
 
 class MenuItem {
-  final String link;
+  final Widget link;
 
   MenuItem(
       {required this.link});
@@ -9,14 +10,14 @@ class MenuItem {
 
 List<MenuItem> appMenuItems = <MenuItem>[
   MenuItem(
-    link: '/home'),
+    link: const ProfilePage()),
     MenuItem(
-    link: '/reminder'),
+    link: const ProfilePage()),
     MenuItem(
-    link: '/location'),
+    link: const ProfilePage()),
     MenuItem(
-    link: '/device'),
-  MenuItem( 
-    link: '/profile'),
+    link: const ProfilePage()),
+    MenuItem( 
+    link: const ProfilePage()),
   
 ];

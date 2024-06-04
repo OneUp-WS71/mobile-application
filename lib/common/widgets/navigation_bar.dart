@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mobile_application/config/menu/menu.dart';
 
 class NavigationMenu extends StatefulWidget {
@@ -30,7 +29,9 @@ class _NavigationMenuState extends State<NavigationMenu> {
         current = index;
       });
       final menuItem = appMenuItems[index];
-      context.push(menuItem.link);
+      Navigator.pushReplacement(
+        context, 
+        MaterialPageRoute(builder: (context) =>  menuItem.link),);
     },
     );
   }
