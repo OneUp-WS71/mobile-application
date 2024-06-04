@@ -6,17 +6,6 @@ class ReminderListMedicineScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('Reminder List Medicine Screen');
-  }
-}
-
-// Clase del item del reminder
-
-class ReminderListMedicineScreen extends StatelessWidget {
-  const ReminderListMedicineScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
     return ListView(children: [
       ReminderItem(
         medicineName: 'Paracetamol',
