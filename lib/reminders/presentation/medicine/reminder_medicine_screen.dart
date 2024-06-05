@@ -3,6 +3,7 @@ import 'package:mobile_application/common/styles/styles.dart';
 import 'package:mobile_application/common/widgets/custom_app_bar.dart';
 import 'package:mobile_application/reminders/presentation/medicine/reminder_list_medicine_screen.dart';
 import 'package:mobile_application/reminders/presentation/medicine/widgets/add_new_reminder_screen.dart';
+import 'package:mobile_application/common/widgets/navigation_bar.dart';
 
 class ReminderMedicineScreen extends StatelessWidget {
   const ReminderMedicineScreen({Key? key}) : super(key: key);
@@ -13,6 +14,8 @@ class ReminderMedicineScreen extends StatelessWidget {
       length: 2, // Número de pestañas
       child: Scaffold(
         appBar: CustomAppBar(title: 'Reminders'),
+        bottomNavigationBar: const NavigationMenu(currentPageIndex: 2,),
+
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(

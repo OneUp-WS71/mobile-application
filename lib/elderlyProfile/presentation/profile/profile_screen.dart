@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_application/common/widgets/custom_app_bar.dart';
 import 'package:mobile_application/common/widgets/navigation_bar.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -8,16 +9,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Profile Elderly', 
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w800
-            ),
-          ),
-        backgroundColor: const Color.fromRGBO(99, 102, 241, 1),
-      ),
+      appBar: CustomAppBar(title: 'Profile'),
       bottomNavigationBar: const NavigationMenu(currentPageIndex: 4,),
       body: const Profile_screen(),
     );
