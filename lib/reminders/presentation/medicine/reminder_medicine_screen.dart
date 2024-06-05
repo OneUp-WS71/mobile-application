@@ -14,7 +14,7 @@ class ReminderMedicineScreen extends StatelessWidget {
       length: 2, // Número de pestañas
       child: Scaffold(
         appBar: CustomAppBar(title: 'Reminders'),
-        bottomNavigationBar: const NavigationMenu(currentPageIndex: 2,),
+        bottomNavigationBar: const NavigationMenu(currentPageIndex: 1,),
 
         body: Padding(
           padding: const EdgeInsets.all(8.0),

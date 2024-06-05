@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:mobile_application/config/menu/menu.dart';
+import 'package:mobile_application/common/styles/styles.dart';
 
 class NavigationMenu extends StatefulWidget {
   final int currentPageIndex;
@@ -15,24 +16,42 @@ class _NavigationMenuState extends State<NavigationMenu> {
 
   @override
   Widget build(BuildContext context) {
-    return NavigationBar(destinations: const [
-      NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
-      NavigationDestination(icon: Icon(Icons.alarm), label: 'Reminders'),
-      NavigationDestination(icon: Icon(Icons.location_city), label: 'Location'),
-      NavigationDestination(icon: Icon(Icons.device_hub), label: 'Device'),
-      NavigationDestination(icon: Icon(Icons.person), label: 'Profile'),
-    ],
-    selectedIndex: widget.currentPageIndex,
+    return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      backgroundColor: Colors.white,
+      selectedItemColor: Styles.primaryColor,
+      unselectedItemColor: Colors.black26,
+      currentIndex: widget.currentPageIndex,
+      onTap: (int index) {
+        final menuItem = appMenuItems[index];
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => menuItem.link),
+        );
+      },
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.alarm_rounded),
+          label: 'Reminders',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.location_on),
+          label: 'Location',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.watch_rounded),
+          label: 'Device',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          label: 'Profile',
+        ),
+      ],
 
-    onDestinationSelected: (int index){
-      setState((){
-        current = index;
-      });
-      final menuItem = appMenuItems[index];
-      Navigator.pushReplacement(
-        context, 
-        MaterialPageRoute(builder: (context) =>  menuItem.link),);
-    },
     );
   }
 }

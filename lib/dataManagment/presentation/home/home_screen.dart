@@ -3,6 +3,7 @@ import 'package:mobile_application/common/styles/styles.dart';
 import 'package:mobile_application/common/widgets/custom_app_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_application/dataManagment/presentation/widgets/measure_box.dart';
+import 'package:mobile_application/common/widgets/navigation_bar.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,6 +16,7 @@ class HomeScreen extends StatelessWidget {
       appBar: CustomAppBar(
         title: 'Home',
       ),
+      bottomNavigationBar: const NavigationMenu(currentPageIndex: 0,),
       body: Column(
         children: [
           Padding(

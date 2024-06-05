@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_application/common/styles/styles.dart';
+import 'package:mobile_application/dataManagment/presentation/home/home_screen.dart';
 
 class RegisterKeeperDataScreen extends StatelessWidget {
   const RegisterKeeperDataScreen({Key? key}) : super(key: key);
@@ -295,7 +296,13 @@ class RegisterKeeperDataScreen extends StatelessWidget {
         width: 250,
         height: 50,
         child: ElevatedButton(
-          onPressed: (){},
+          onPressed: (){
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeScreen()),
+            );
+
+          },
           child: Text(
             'Register',
             style: TextStyle(

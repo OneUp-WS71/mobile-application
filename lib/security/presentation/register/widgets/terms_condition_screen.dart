@@ -45,7 +45,7 @@ class TermsConditionScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              width: 165,
+              width: 150,
               height: 45,
               child: TextButton(
                 onPressed: () {
@@ -57,22 +57,6 @@ class TermsConditionScreen extends StatelessWidget {
                   backgroundColor: Colors.black26,
                 ),
                 child: const Text('Close'),
-              ),
-            ),
-            const SizedBox(width: 5),
-            SizedBox(
-              width: 165,
-              height: 45,
-              child: TextButton(
-                onPressed: (){
-                  Navigator.pop(context);
-                },
-                style: TextButton.styleFrom(
-                  foregroundColor:
-                  Colors.white,
-                  backgroundColor: Styles.primaryColor,
-                ),
-                child: const Text('Accept'),
               ),
             ),
           ],
