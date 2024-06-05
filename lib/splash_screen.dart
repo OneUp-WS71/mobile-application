@@ -4,14 +4,16 @@ import 'common/styles/styles.dart';
 import 'security/presentation/login/login_screen.dart';
 
 class SplashScreen extends StatelessWidget {
-  static const String name = 'splash_screen';
+
+  const SplashScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
         splash:Column(
           children: [
             Image.asset('assets/icons/logo-elderlycare.png'),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text('Elderly Care',
               style: TextStyle(
                   fontFamily: Styles.headingFont,
@@ -21,7 +23,7 @@ class SplashScreen extends StatelessWidget {
           ],
         ),
         backgroundColor: Styles.primaryColor,
-        duration: 3000,
+        duration: 2000,
         nextScreen: const LoginScreen(),
       splashIconSize: 300,
       splashTransition: SplashTransition.fadeTransition,

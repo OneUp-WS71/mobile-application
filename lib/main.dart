@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_application/elderlyProfile/presentation/profile/profile_screen.dart';
 import 'package:mobile_application/splash_screen.dart';
-import 'package:mobile_application/security/presentation/register/terms_condition_screen.dart';
-import 'package:mobile_application/security/presentation/login/login_screen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -16,10 +14,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      home: ProfilePage(),
+      home: SplashScreen(),
+
     );
   }
 }
