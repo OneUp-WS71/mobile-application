@@ -38,7 +38,7 @@ class ReminderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Styles.secondaryColor,
+      color: Colors.white,
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: ListTile(
         leading: Icon(Icons.medication_rounded, color: Styles.primaryColor),

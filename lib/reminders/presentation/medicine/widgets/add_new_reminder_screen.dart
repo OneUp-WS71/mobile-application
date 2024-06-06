@@ -11,6 +11,7 @@ class AddNewReminderScreen extends StatelessWidget {
 
     return AlertDialog(
       backgroundColor: Colors.white,
+      contentPadding: const EdgeInsets.all(15),
       title: Center(
         child: Text('Add New Reminder',
             style: TextStyle(
@@ -23,11 +24,11 @@ class AddNewReminderScreen extends StatelessWidget {
       content: Flexible(
         child: SingleChildScrollView(
             child: Column(children: [
-          Padding(
-            padding: EdgeInsets.only(right: screenWidth * 0.35),
-            child: Text(
+              Padding(
+              padding: EdgeInsets.only(right: screenWidth * 0.30),
+                child: Text(
               'Medicine Name',
-              style: TextStyle(
+                style: TextStyle(
                 fontSize: 18,
                 fontFamily: Styles.headingFont,
                 fontWeight: FontWeight.bold,
@@ -35,9 +36,9 @@ class AddNewReminderScreen extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-            child: TextFormField(
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+              child: TextFormField(
               maxLines: 1,
               decoration: InputDecoration(
                 hintText: 'Enter Medicine Name',
@@ -162,7 +163,7 @@ class AddNewReminderScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              width: 150,
+              width: 130,
               height: 45,
               child: TextButton(
                 onPressed: () {
@@ -177,7 +178,7 @@ class AddNewReminderScreen extends StatelessWidget {
             ),
             const SizedBox(width: 5),
             SizedBox(
-              width: 150,
+              width: 130,
               height: 45,
               child: TextButton(
                 onPressed: () {

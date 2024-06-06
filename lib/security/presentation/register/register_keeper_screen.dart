@@ -53,17 +53,17 @@ class RegisterKeeperScreen extends StatelessWidget {
                       child: Column(
                         children: [
                           const SizedBox(height: 20),
-                          Center(
-                            child: Text(
-                              'CREATE A NEW ACCOUNT',
-                              style: TextStyle(
-                                fontSize: 28,
-                                fontFamily: Styles.headingFont,
-                                fontWeight: FontWeight.bold,
-                                color: Styles.primaryColor,
+                            Center(
+                              child: Text(
+                                'CREATE NEW ACCOUNT',
+                                style: TextStyle(
+                                  fontSize: 26,
+                                  fontFamily: Styles.headingFont,
+                                  fontWeight: FontWeight.bold,
+                                  color: Styles.primaryColor,
+                                ),
                               ),
                             ),
-                          ),
                           const SizedBox(height: 20),
                           Padding(
                             padding:EdgeInsets.only(right: screenWidth * 0.60),

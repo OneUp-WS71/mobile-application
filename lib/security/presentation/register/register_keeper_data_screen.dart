@@ -7,6 +7,9 @@ class RegisterKeeperDataScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Container(
         decoration: BoxDecoration(
         color: Styles.primaryColor),
@@ -34,20 +37,22 @@ class RegisterKeeperDataScreen extends StatelessWidget {
     children: [
     const SizedBox(height: 20),
     Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25),
-      child: Text(
-      'Enter information about the older adult',
-      style: TextStyle(
-      fontSize: 28,
-      fontFamily: Styles.headingFont,
-      fontWeight: FontWeight.bold,
-      color: Styles.primaryColor,
-      ),
+      padding: EdgeInsets.only(left: 20),
+      child: Center(
+        child: Text(
+        'Enter information of the older adult',
+        style: TextStyle(
+        fontSize: 28,
+        fontFamily: Styles.headingFont,
+        fontWeight: FontWeight.bold,
+        color: Styles.primaryColor,
+        ),
+        ),
       ),
     ),
     const SizedBox(height: 10),
       Padding(
-        padding:EdgeInsets.only(right: 300),
+        padding:EdgeInsets.only(right: screenWidth * 0.60),
         child: Text(
           'Name',
           style: TextStyle(
@@ -88,7 +93,7 @@ class RegisterKeeperDataScreen extends StatelessWidget {
       ),
     const SizedBox(height: 10),
       Padding(
-        padding:EdgeInsets.only(right: 230),
+        padding:EdgeInsets.only(right: screenWidth * 0.45),
         child: Text(
           'Date of birth',
           style: TextStyle(
@@ -129,7 +134,7 @@ class RegisterKeeperDataScreen extends StatelessWidget {
       ),
     const SizedBox(height: 10),
       Padding(
-        padding:EdgeInsets.only(right: 260),
+        padding:EdgeInsets.only(right: screenWidth * 0.55),
         child: Text(
           'Address',
           style: TextStyle(
@@ -170,7 +175,7 @@ class RegisterKeeperDataScreen extends StatelessWidget {
       ),
     const SizedBox(height: 10),
       Padding(
-        padding:EdgeInsets.only(right: 200),
+        padding:EdgeInsets.only(right: screenWidth * 0.45),
         child: Text(
           'Familly phone',
           style: TextStyle(
@@ -211,7 +216,7 @@ class RegisterKeeperDataScreen extends StatelessWidget {
       ),
     const SizedBox(height: 10),
       Padding(
-        padding:EdgeInsets.only(right: 260),
+        padding:EdgeInsets.only(right: screenWidth * 0.60),
         child: Text(
           'Weight',
           style: TextStyle(
@@ -252,7 +257,7 @@ class RegisterKeeperDataScreen extends StatelessWidget {
       ),
     const SizedBox(height: 10),
       Padding(
-        padding:EdgeInsets.only(right: 260),
+        padding:EdgeInsets.only(right: screenWidth * 0.60),
         child: Text(
           'Height',
           style: TextStyle(

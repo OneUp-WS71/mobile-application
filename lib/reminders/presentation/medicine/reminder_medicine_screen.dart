@@ -55,11 +55,12 @@ class ReminderMedicineScreen extends StatelessWidget {
                   ],
                 ),
               ),
+              SizedBox(height: 15),
               const Expanded(
                 child: TabBarView(
                   children: [
                     ReminderListMedicineScreen(),
-                    Center(child: Text('Medical Appointment Tab Content')),
+                    Center(child: Text('Appointment')),
                   ],
                 ),
               ),

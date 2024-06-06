@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
       body: Column(
         children: [
           Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(10),
       child: Center(
         child: Text(
             formattedDate,
@@ -33,9 +33,9 @@ class HomeScreen extends StatelessWidget {
       ),
       ),
       ),
-          const SizedBox(height: 10),
+          //const SizedBox(height: 10),
           Container(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(15),
             alignment: Alignment.centerLeft,
             child: Text(
               'Measures',
@@ -47,14 +47,14 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 5),
           SizedBox(
             height: 180,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: const [
                 MeasureBox(
-                  title: 'Temperature',
+                  title: 'Weight',
                   icon: Icons.fitness_center,
                   value: '70 kg',
                 ),
@@ -74,7 +74,7 @@ class HomeScreen extends StatelessWidget {
           ),
 
           //tabBar decorativo
-          Container(
+         /* Container(
             height: 10,
             child: DefaultTabController(
               length: 3,
@@ -93,7 +93,7 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            ),
+            ),*/
 
           const SizedBox(height: 10),
           Container(
