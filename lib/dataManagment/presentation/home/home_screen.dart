@@ -4,9 +4,18 @@ import 'package:mobile_application/common/widgets/custom_app_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_application/dataManagment/presentation/widgets/measure_box.dart';
 import 'package:mobile_application/common/widgets/navigation_bar.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+class _HomeScreenState extends State<HomeScreen> {
+  var _indicatorSlider = 1;
+  final _pageController = PageController(initialPage: 1);
 
   @override
   Widget build(BuildContext context) {
@@ -48,53 +57,51 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 5),
-          SizedBox(
-            height: 180,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: const [
-                MeasureBox(
-                  title: 'Weight',
-                  icon: Icons.fitness_center,
-                  value: '70 kg',
+          Column(
+            children: [
+              SizedBox(
+                height: 180,
+                width: 300,
+                child: PageView(
+                  controller: _pageController,
+                  scrollDirection: Axis.horizontal,
+                  onPageChanged: (index) {
+                    setState(() {
+                      _indicatorSlider = index;
+                    });
+                  },
+                  children: const [
+                    MeasureBox(
+                      title: 'Weight',
+                      icon: Icons.fitness_center,
+                      value: '70 kg',
+                    ),
+                    MeasureBox(
+                      title: 'Height',
+                      icon: Icons.height,
+                      value: '170 cm',
+                    ),
+                    MeasureBox(
+                      title: 'BMI',
+                      icon: Icons.monitor_weight,
+                      value: '24.2',
+                    ),
+                  ],
                 ),
-                MeasureBox(
-                  title: 'Height',
-                  icon: Icons.height,
-                  value: '170 cm',
-                ),
-                MeasureBox(
-                  title: 'BMI',
-                  icon: Icons.monitor_weight,
-                  value: '24.2',
-                ),
-              ],
-
-            )
-          ),
-
-          //tabBar decorativo
-         /* Container(
-            height: 10,
-            child: DefaultTabController(
-              length: 3,
-              child: TabBar(
-                indicator: BoxDecoration(
-                  color: Styles.primaryColor,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                indicatorSize: TabBarIndicatorSize.tab,
-                labelColor: Colors.white,
-                unselectedLabelColor: Colors.transparent,
-                tabs: const [
-                  Tab(text:''),
-                  Tab(text:''),
-                  Tab(text:''),
-                ],
               ),
-            ),
-            ),*/
-
+              const SizedBox(height: 10),
+              SmoothPageIndicator(
+                controller: _pageController,
+                count: 3,
+                effect: ExpandingDotsEffect(
+                  activeDotColor: Styles.primaryColor,
+                  dotColor: Colors.grey,
+                  dotWidth: 10,
+                  dotHeight: 10,
+                ),
+              ),
+            ],
+          ),
           const SizedBox(height: 10),
           Container(
             padding: const EdgeInsets.all(20),

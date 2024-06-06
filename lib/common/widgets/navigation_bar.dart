@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:mobile_application/config/menu/menu.dart';
+import 'package:mobile_application/common/config/menu/menu.dart';
 import 'package:mobile_application/common/styles/styles.dart';
 
 class NavigationMenu extends StatefulWidget {
