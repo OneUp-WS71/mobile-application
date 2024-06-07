@@ -4,8 +4,8 @@ import 'package:mobile_application/common/widgets/custom_app_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_application/dataManagment/presentation/widgets/measure_box.dart';
 import 'package:mobile_application/common/widgets/navigation_bar.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:mobile_application/dataManagment/presentation/widgets/vital_signs_box.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -13,9 +13,31 @@ class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
+
 class _HomeScreenState extends State<HomeScreen> {
   var _indicatorSlider = 1;
   final _pageController = PageController(initialPage: 1);
+
+  //Lista de vital signs
+  final List<Map<String,dynamic>> vitalSignsData=[
+    {
+      'title': 'Heart Rate',
+      'measure':'75 bpm',
+      'value':'Stable',
+      'icon': Icons.favorite,
+      'iconColor': Colors.red,
+      'image': 'assets/images/Latido.png',
+    },
+    {
+      'title': 'Temperature',
+      'measure':'36.5 °C',
+      'value':'Stable',
+      'icon': Icons.thermostat,
+      'iconColor': Colors.lightBlueAccent,
+      'image': 'assets/images/temperature.png',
+    },
+
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -115,6 +137,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.black,
               ),
             ),
+          ),
+          //Agregar list de vital signs
+          Expanded(
+              child: ListView.builder(
+                itemCount: vitalSignsData.length,
+                itemBuilder: (context,index){
+                  final vitalSign=vitalSignsData[index];
+                  return VitalSignsBox(
+                      title: vitalSign['title']!,
+                      measure: vitalSign['measure']!,
+                      value: vitalSign['value']!,
+                    icon: vitalSign['icon']!,
+                    iconColor: vitalSign['iconColor']!,
+                    image: vitalSign['image']!,
+                  );
+                }
+              )
           ),
         ],
       ),

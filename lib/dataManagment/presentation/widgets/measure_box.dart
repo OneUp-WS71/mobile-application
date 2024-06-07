@@ -36,7 +36,7 @@ class MeasureBox extends StatelessWidget {
             title,
             style: TextStyle(
               fontFamily: Styles.headingFont,
-              fontSize: 18,
+              fontSize: 20,
               fontWeight: FontWeight.bold,
               color: Styles.primaryColor,
             ),
@@ -45,14 +45,15 @@ class MeasureBox extends StatelessWidget {
           Icon(
             icon,
             size: 40,
-            color: Styles.primaryColor,
+            color: Colors.black87,
           ),
           const SizedBox(height: 10),
           Text(
             value,
             style: TextStyle(
               fontFamily: Styles.headingFont,
-              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              fontSize: 28,
               color: Colors.black,
             ),
           ),

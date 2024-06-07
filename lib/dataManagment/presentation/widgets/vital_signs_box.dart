@@ -2,18 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:mobile_application/common/styles/styles.dart';
 
 class VitalSignsBox extends StatelessWidget {
+  final String title;
   final String measure;
   final String value;
+  final IconData icon;
+  final String image;
+  final Color iconColor;
+
   const VitalSignsBox({
     Key? key,
+    required this.title,
     required this.measure,
     required this.value,
+    required this.icon,
+    required this.image,
+    required this.iconColor,
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 400,
-      margin: const EdgeInsets.symmetric(horizontal: 10),
+      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+      padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -33,29 +43,53 @@ class VitalSignsBox extends StatelessWidget {
               Row(
                 children: [
                   Icon(
-                    Icons.favorite,
-                    size: 40,
-                    color: Colors.red,
+                    icon,
+                    size: 35,
+                    color: iconColor,
                   ),
                   SizedBox(width: 10),
                   Text(
-                    'Heart',
+                    title,
                     style: TextStyle(
                       fontFamily: Styles.headingFont,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Styles.primaryColor,
+                      color: iconColor,
                     ),
                   ),
 
                 ],
               ),
               const SizedBox(height: 10),
+              Text(
+                measure,
+                style: TextStyle(
+                  fontFamily: Styles.headingFont,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 28,
+                  color: Colors.black,
+                ),
+              ),
+              SizedBox(width: 10),
+              // CLASE QUE MUESTRA SI ESTA ESTABLE O NO
+              Text(
+                value,
+                style: TextStyle(
+                  fontFamily: Styles.headingFont,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: iconColor,
+                ),
+              ),
 
             ],
           ),
-          const SizedBox(width: 10),
-          Image.asset('assets/images/Latido.png'),
+          const Spacer(),
+          Image.asset(
+              image,
+              width: 200,
+              height: 100,
+          ),
         ],
       ),
     );
