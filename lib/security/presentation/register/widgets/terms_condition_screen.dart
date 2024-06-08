@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mobile_application/common/styles/styles.dart';
 
 class TermsConditionScreen extends StatelessWidget {
+  const TermsConditionScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -12,7 +14,7 @@ class TermsConditionScreen extends StatelessWidget {
         fontSize: 30,
         fontWeight: FontWeight.bold,
       )),
-      content: Flexible(
+      content: const Flexible(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,35 +44,19 @@ class TermsConditionScreen extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              width: 165,
+            SizedBox(
+              width: 150,
               height: 45,
               child: TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text('Close'),
                 style: TextButton.styleFrom(
                   foregroundColor:
                   Colors.white,
                   backgroundColor: Colors.black26,
                 ),
-              ),
-            ),
-            SizedBox(width: 5),
-            Container(
-              width: 165,
-              height: 45,
-              child: TextButton(
-                onPressed: (){
-                  Navigator.pop(context);
-                },
-                child: Text('Accept'),
-                style: TextButton.styleFrom(
-                  foregroundColor:
-                  Colors.white,
-                  backgroundColor: Styles.primaryColor,
-                ),
+                child: const Text('Close'),
               ),
             ),
           ],
