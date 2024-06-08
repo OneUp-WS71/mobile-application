@@ -87,7 +87,7 @@ class VitalSignsBox extends StatelessWidget {
           const Spacer(),
           Image.asset(
               image,
-              width: 200,
+              width: 150,
               height: 100,
           ),
         ],
