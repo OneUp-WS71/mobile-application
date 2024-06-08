@@ -1,9 +1,41 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_application/application/infrastructure/model/userdb/user_userdb.dart';
 import 'package:mobile_application/common/styles/styles.dart';
 import 'package:mobile_application/security/presentation/register/register_keeper_screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+
+  dynamic userDetail;
+  @override
+  void initState(){
+    super.initState();
+    getUserById(1);
+
+  }
+  final dio = Dio(
+    BaseOptions(baseUrl: 'https://oneupbackend.zeabur.app/api/oneup/v1')
+  );
+
+  Future<dynamic> getUserById(int userId) async{
+    final response = await dio.get('/users/$userId');
+    if (response.statusCode != 200)
+      throw Exception('User with id: $userId not found');
+
+    userDetail = UserUserDb.fromJson(response.data);
+    final data = response.data;
+    print('------response------- $response');
+    print('------response------- $data');
+    print('------Hola------- $userDetail');
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
