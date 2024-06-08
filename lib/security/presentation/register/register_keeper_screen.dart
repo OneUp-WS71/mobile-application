@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_application/common/styles/styles.dart';
-import 'package:mobile_application/security/presentation/register/terms_condition_screen.dart';
+import 'package:mobile_application/security/presentation/register/widgets/terms_condition_screen.dart';
 import 'package:mobile_application/security/presentation/register/register_keeper_data_screen.dart';
 
 class RegisterKeeperScreen extends StatelessWidget {
@@ -8,7 +8,10 @@ class RegisterKeeperScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     bool isChecked = false;
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
 
     return Container(
         decoration: BoxDecoration(
@@ -32,9 +35,9 @@ class RegisterKeeperScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
+                   SizedBox(height: screenHeight * 0.01),
                   Padding(
-                    padding:EdgeInsets.all(20),
+                    padding:const EdgeInsets.all(20),
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -50,18 +53,20 @@ class RegisterKeeperScreen extends StatelessWidget {
                       child: Column(
                         children: [
                           const SizedBox(height: 20),
-                          Text(
-                            'CREATE A NEW ACCOUNT',
-                            style: TextStyle(
-                              fontSize: 28,
-                              fontFamily: Styles.headingFont,
-                              fontWeight: FontWeight.bold,
-                              color: Styles.primaryColor,
+                            Center(
+                              child: Text(
+                                'CREATE NEW ACCOUNT',
+                                style: TextStyle(
+                                  fontSize: 26,
+                                  fontFamily: Styles.headingFont,
+                                  fontWeight: FontWeight.bold,
+                                  color: Styles.primaryColor,
+                                ),
+                              ),
                             ),
-                          ),
                           const SizedBox(height: 20),
                           Padding(
-                            padding:EdgeInsets.only(right: 300),
+                            padding:EdgeInsets.only(right: screenWidth * 0.60),
                             child: Text(
                               'Email',
                               style: TextStyle(
@@ -83,7 +88,7 @@ class RegisterKeeperScreen extends StatelessWidget {
                                     Icons.person,
                                     color: Styles.primaryColor,
                                   ),
-                                  contentPadding: EdgeInsets.all(20),
+                                  contentPadding: const EdgeInsets.all(20),
                                   hintStyle:  const TextStyle(
                                     color: Colors.grey,
                                     fontSize: 18,
@@ -103,7 +108,7 @@ class RegisterKeeperScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 10),
                           Padding(
-                            padding:EdgeInsets.only(right: 300),
+                            padding:EdgeInsets.only(right: screenWidth * 0.60),
                             child: Text(
                               'Name',
                               style: TextStyle(
@@ -125,7 +130,7 @@ class RegisterKeeperScreen extends StatelessWidget {
                                   Icons.lock,
                                   color: Styles.primaryColor,
                                 ),
-                                contentPadding: EdgeInsets.all(20),
+                                contentPadding: const EdgeInsets.all(20),
                                 hintStyle: const TextStyle(
                                   color: Colors.grey,
                                   fontSize: 18,
@@ -144,7 +149,7 @@ class RegisterKeeperScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 10),
                           Padding(
-                            padding:EdgeInsets.only(right: 250),
+                            padding:EdgeInsets.only(right: screenWidth * 0.50),
                             child: Text(
                               'Password',
                               style: TextStyle(
@@ -166,7 +171,7 @@ class RegisterKeeperScreen extends StatelessWidget {
                                   Icons.lock,
                                   color: Styles.primaryColor,
                                 ),
-                                contentPadding: EdgeInsets.all(20),
+                                contentPadding: const EdgeInsets.all(20),
                                 hintStyle: const TextStyle(
                                   color: Colors.grey,
                                   fontSize: 18,
@@ -188,14 +193,15 @@ class RegisterKeeperScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children:[
-                                Text(
+                                const Text(
                                   'I agree with the ',
                                 ),
                                 TextButton(
                                   onPressed: (){
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) =>  TermsConditionScreen()),
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {  return const TermsConditionScreen();
+                                      }
                                     );
                                   },
                                   child: Text(
@@ -218,16 +224,22 @@ class RegisterKeeperScreen extends StatelessWidget {
                               ]
                           ),
                           const SizedBox(height: 20),
-                          Container(
+                          SizedBox(
                             width: 250,
                             height: 50,
                             child: ElevatedButton(
                               onPressed: (){
                                 Navigator.push(
                                   context,
-                                MaterialPageRoute(builder: (context) =>  RegisterKeeperDataScreen()),
+                                MaterialPageRoute(builder: (context) =>  const RegisterKeeperDataScreen()),
                                 );
                               },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Styles.primaryColor,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
                               child: Text(
                                 'SIGN UP',
                                 style: TextStyle(
@@ -235,12 +247,6 @@ class RegisterKeeperScreen extends StatelessWidget {
                                   fontSize: 20,
                                   fontFamily: Styles.headingFont,
                                   fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Styles.primaryColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
                                 ),
                               ),
                             ),
