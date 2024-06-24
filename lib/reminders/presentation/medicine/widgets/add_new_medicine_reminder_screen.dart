@@ -1,8 +1,76 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_application/common/styles/styles.dart';
 
-class AddNewReminderScreen extends StatelessWidget {
-  const AddNewReminderScreen({Key? key}) : super(key: key);
+class AddNewMedicineReminderScreen extends StatefulWidget {
+  const AddNewMedicineReminderScreen({Key? key}) : super(key: key);
+  @override
+  _AddNewMedicineReminderScreenState createState() => _AddNewMedicineReminderScreenState();
+}
+
+class _AddNewMedicineReminderScreenState extends State<AddNewMedicineReminderScreen> {
+  TimeOfDay selectedTime = TimeOfDay.now();
+
+  Map<String, bool> daysOfWeek = {
+    'Monday': false,
+    'Tuesday': false,
+    'Wednesday': false,
+    'Thursday': false,
+    'Friday': false,
+    'Saturday': false,
+    'Sunday': false,
+  };
+
+  void _selectTime(BuildContext context) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: selectedTime,
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: Styles.primaryColor, // Header background color
+              onPrimary: Colors.white, // Header text color
+              onSurface: Styles.primaryColor, // Body text color
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: Styles.primaryColor, // Button text color
+              ),
+            ),
+            timePickerTheme: TimePickerThemeData(
+              backgroundColor: Styles.secondaryColor,
+              dialBackgroundColor: Colors.white,
+              dialHandColor: Styles.primaryColor,
+              dialTextColor: Colors.black,
+              entryModeIconColor: Styles.primaryColor,
+              hourMinuteTextColor: MaterialStateColor.resolveWith((states) =>
+              states.contains(MaterialState.selected)
+                  ? Colors.white
+                  : Styles.primaryColor),
+              hourMinuteColor: MaterialStateColor.resolveWith((states) =>
+              states.contains(MaterialState.selected)
+                  ? Styles.primaryColor
+                  : Colors.white),
+              dayPeriodTextColor: MaterialStateColor.resolveWith((states) =>
+              states.contains(MaterialState.selected)
+                  ? Colors.white
+                  : Styles.primaryColor),
+              dayPeriodColor: MaterialStateColor.resolveWith((states) =>
+              states.contains(MaterialState.selected)
+                  ? Styles.primaryColor
+                  : Colors.white),// Background color
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (picked != null && picked != selectedTime)
+      setState(() {
+        selectedTime = picked;
+      });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +81,7 @@ class AddNewReminderScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       contentPadding: const EdgeInsets.all(15),
       title: Center(
-        child: Text('Add New Reminder',
+        child: Text('Add New Medicine',
             style: TextStyle(
               fontFamily: Styles.headingFont,
               fontSize: 26,
@@ -105,46 +173,6 @@ class AddNewReminderScreen extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Padding(
-            padding: EdgeInsets.only(right: screenWidth * 0.40),
-            child: Text(
-              'Frequency',
-              style: TextStyle(
-                fontSize: 18,
-                fontFamily: Styles.headingFont,
-                fontWeight: FontWeight.bold,
-                color: Styles.primaryColor,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-            child: TextFormField(
-              maxLines: 1,
-              decoration: InputDecoration(
-                hintText: 'Enter Frequency',
-                prefixIcon: Icon(
-                  Icons.lock,
-                  color: Styles.primaryColor,
-                ),
-                contentPadding: const EdgeInsets.all(20),
-                hintStyle: const TextStyle(
-                  color: Colors.grey,
-                  fontSize: 18,
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: BorderSide(
-                    color: Styles.primaryColor,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 10),
-          Padding(
             padding: EdgeInsets.only(right: screenWidth * 0.50),
             child: Text(
               'Time',
@@ -156,7 +184,62 @@ class AddNewReminderScreen extends StatelessWidget {
               ),
             ),
           ),
-        ])),
+              SizedBox(height: 10),
+              TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Styles.primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  padding: const EdgeInsets.all(20),
+                ),
+                onPressed: () => _selectTime(context),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.access_time, color: Colors.white),
+                    const SizedBox(width: 10),
+                    Text(
+                      "Select Time",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: Styles.headingFont,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 10),
+              Padding(
+                padding: EdgeInsets.only(right: screenWidth * 0.40),
+                child: Text(
+                  'Frequency',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontFamily: Styles.headingFont,
+                    fontWeight: FontWeight.bold,
+                    color: Styles.primaryColor,
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
+              Column(
+                children: daysOfWeek.keys.map((String key) {
+                  return CheckboxListTile(
+                    title: Text(key),
+                    value: daysOfWeek[key],
+                    activeColor: Styles.primaryColor,
+                    checkColor: Colors.white,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        daysOfWeek[key] = value!;
+                      });
+                    },
+                  );
+                }).toList(),
+              ),
+            ])),
       ),
       actions: [
         Row(
