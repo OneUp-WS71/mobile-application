@@ -78,10 +78,12 @@ class _AddNewMedicineReminderScreenState extends State<AddNewMedicineReminderScr
   }
 
   void _saveReminder(){
+    final nowTime= DateTime.now();
+
     final reminder= MedicineReminder(
         id: UniqueKey().toString(),
         title: _medicineNameController.text,
-        time: DateTime(selectedTime.hour, selectedTime.minute),
+        time: DateTime(nowTime.year, nowTime.month, nowTime.day, selectedTime.hour, selectedTime.minute),
         dosage: _dosageController.text,
         frequency: daysOfWeek.keys.where((key) => daysOfWeek[key]!).toList(),
     );
