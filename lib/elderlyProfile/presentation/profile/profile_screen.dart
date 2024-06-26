@@ -27,34 +27,17 @@ class Profile_screen extends StatefulWidget {
 }
 
 class _Profile_screenState extends State<Profile_screen> {
-  UserUserDb? userDetail;
   bool _error = false;
-   Future<void> fetchUserDetail() async {
-    try{
-
-      //userDetail = await UserDataProvider().getUserByName(username);
-
-      _error = false;
-    }catch(e) {
-      _error = true;
-    }
-    
-    setState(() {});
-  }
+   
   @override
   void initState(){
     super.initState();
   }
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-// Mueve esto aquí
-    fetchUserDetail(); // Llama a la función después de obtener el username
-  }
+
   @override
   Widget build(BuildContext context) {
     final username = Provider.of<UserModel>(context).username;
-    print('-----username----- ${username}');
+    print('-----username----- ${username!.patients[0].address}');
     return  Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -81,8 +64,8 @@ class _Profile_screenState extends State<Profile_screen> {
           const SizedBox(height: 7,),
           Text(
             username?.patients == [] ?
-            username!.patients[1].name:
-            "string"
+            "string":
+            username!.patients[0].name
             ,
             style: const TextStyle(
                           color: Color.fromRGBO(99, 102, 241, 1),
@@ -120,7 +103,8 @@ class _Profile_screenState extends State<Profile_screen> {
                           fontSize: 18),),
                           Text(
                             username?.patients == [] ?
-                          userDetail!.patients![1].date: "",
+                            "":
+                            username.phone,
                           style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w800,
@@ -138,7 +122,8 @@ class _Profile_screenState extends State<Profile_screen> {
                           fontSize: 18),),
                           Text(
                             username?.patients == [] ?
-                          userDetail!.patients[1].date: "",
+                            "":
+                            username!.patients[0].date,
                           style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w800,
@@ -156,7 +141,8 @@ class _Profile_screenState extends State<Profile_screen> {
                           fontSize: 18),),
                           Text(
                             username?.patients == [] ?
-                          ' ${userDetail!.patients![1].height.toString()} m': "",
+                            "":
+                            ' ${username!.patients![0].height.toString()} m',
                           style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w800,
@@ -174,7 +160,8 @@ class _Profile_screenState extends State<Profile_screen> {
                           fontSize: 18),),
                           Text(
                             username?.patients == [] ?
-                          '${userDetail!.patients![1].weight} Kg' : "",
+                            "":
+                            '${username!.patients[0].weight} Kg',
                           style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w800,
@@ -192,7 +179,8 @@ class _Profile_screenState extends State<Profile_screen> {
                           fontSize: 18),),
                           Text(
                             username?.patients == [] ?
-                          userDetail!.patients![1].address : "",
+                            "":
+                            username!.patients![0].address,
                           style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w800,
