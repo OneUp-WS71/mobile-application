@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'package:mobile_application/security/application/datasources/provider.dart';
 import 'package:mobile_application/splash_screen.dart';
+import 'injections.dart';
 import 'package:provider/provider.dart';
 
-void main() {
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => UserModel(),
-      child: const MyApp(),
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  setupDependencies();
+  runApp(ChangeNotifierProvider(
+    create: (context) => UserModel(),
+    child: const MyApp(),
     ),
   );
 }
