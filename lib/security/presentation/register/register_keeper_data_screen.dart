@@ -340,7 +340,7 @@ class _RegisterKeeperDataScreenState extends State<RegisterKeeperDataScreen> {
               weight: double.parse(_weightController.text), 
               height: double.parse(_heightController.text));
 
-            await Provider.of<UserModel>(context).postPatientRegister(patient, userModel.username!.id);
+            await Provider.of<UserModel>(context, listen: false).postPatientRegister(patient, userModel.username2!.id);
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const HomeScreen()),

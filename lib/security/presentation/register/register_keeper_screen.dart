@@ -387,8 +387,8 @@ class _RegisterKeeperScreenState extends State<RegisterKeeperScreen> {
                             height: 50,
                             child: ElevatedButton(
                               onPressed: (){
-                                print('-----username221311------- ${Provider.of<UserModel>(context, listen: false).username}');
-                                if (Provider.of<UserModel>(context, listen: false).username != null) {
+                                print('-----username221311------- ${Provider.of<UserModel>(context, listen: false).username2}');
+                                if (Provider.of<UserModel>(context, listen: false).username2 != null) {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(

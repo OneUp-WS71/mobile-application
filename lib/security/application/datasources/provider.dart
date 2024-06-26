@@ -3,9 +3,11 @@ import 'package:mobile_application/security/application/datasources/user_datasou
 import 'package:mobile_application/security/application/models/user_userdb.dart';
 class UserModel with ChangeNotifier {
   UserUserDb? _username;
+  UserUserDb? _username2;
   bool _error = false;
 
   UserUserDb? get username => _username;
+  UserUserDb? get username2 => _username2;
   bool get error => _error;
 
   Future<void> fetchUserDetail(String username) async {
@@ -23,7 +25,7 @@ class UserModel with ChangeNotifier {
   Future<void> postRegister( BuildContext context, UserUserDb user)async{
     try{
       
-      _username = await UserDataProvider().postUser(user);
+      _username2 = await UserDataProvider().postUser(user);
       print('---userDetail--- ${_username}');
       _error = false;
 

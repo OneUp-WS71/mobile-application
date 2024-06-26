@@ -80,7 +80,10 @@ class _Profile_screenState extends State<Profile_screen> {
           ),
           const SizedBox(height: 7,),
           Text(
-            username!.patients![1].name,
+            username?.patients == [] ?
+            username!.patients[1].name:
+            "string"
+            ,
             style: const TextStyle(
                           color: Color.fromRGBO(99, 102, 241, 1),
                           fontWeight: FontWeight.w800,
@@ -116,7 +119,8 @@ class _Profile_screenState extends State<Profile_screen> {
                           fontWeight: FontWeight.w800,
                           fontSize: 18),),
                           Text(
-                          userDetail!.patients![1].date,
+                            username?.patients == [] ?
+                          userDetail!.patients![1].date: "",
                           style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w800,
@@ -133,7 +137,8 @@ class _Profile_screenState extends State<Profile_screen> {
                           fontWeight: FontWeight.w800,
                           fontSize: 18),),
                           Text(
-                          userDetail!.patients[1].date,
+                            username?.patients == [] ?
+                          userDetail!.patients[1].date: "",
                           style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w800,
@@ -150,7 +155,8 @@ class _Profile_screenState extends State<Profile_screen> {
                           fontWeight: FontWeight.w800,
                           fontSize: 18),),
                           Text(
-                          ' ${userDetail!.patients![1].height.toString()} m',
+                            username?.patients == [] ?
+                          ' ${userDetail!.patients![1].height.toString()} m': "",
                           style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w800,
@@ -167,7 +173,8 @@ class _Profile_screenState extends State<Profile_screen> {
                           fontWeight: FontWeight.w800,
                           fontSize: 18),),
                           Text(
-                          '${userDetail!.patients![1].weight} Kg',
+                            username?.patients == [] ?
+                          '${userDetail!.patients![1].weight} Kg' : "",
                           style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w800,
@@ -184,7 +191,8 @@ class _Profile_screenState extends State<Profile_screen> {
                           fontWeight: FontWeight.w800,
                           fontSize: 18),),
                           Text(
-                          userDetail!.patients![1].address,
+                            username?.patients == [] ?
+                          userDetail!.patients![1].address : "",
                           style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w800,

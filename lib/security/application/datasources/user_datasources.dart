@@ -24,6 +24,7 @@ class UserDataProvider{
   Future<UserUserDb> postUser(UserUserDb user) async{
     try {
       print('----user----- ${user.username}');
+      print('----user data----- ${user.toJson()}');
       Response response = await dio.post(
         '/users',
         data: user.toJson(),
