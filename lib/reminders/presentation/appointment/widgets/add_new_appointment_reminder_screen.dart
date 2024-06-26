@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mobile_application/common/styles/styles.dart';
+import 'package:mobile_application/reminders/application/usecases/save_reminder.dart';import '../../../domain/entities/appointment_reminder.dart';
 
 class AddNewAppointmentReminderScreen extends StatefulWidget {
   const AddNewAppointmentReminderScreen({Key? key}) : super(key: key);
@@ -8,6 +10,9 @@ class AddNewAppointmentReminderScreen extends StatefulWidget {
 }
 class _AddNewAppointmentReminderScreenState extends State<AddNewAppointmentReminderScreen> {
   TimeOfDay selectedTime = TimeOfDay.now();
+  final TextEditingController _appointmentNameController = TextEditingController();
+  final TextEditingController _locationController = TextEditingController();
+
 
   void _selectTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
@@ -60,6 +65,30 @@ class _AddNewAppointmentReminderScreenState extends State<AddNewAppointmentRemin
       });
   }
 
+  void _saveReminderAppointment() {
+    if (_appointmentNameController.text.isNotEmpty && selectedTime != null){
+      final now= DateTime.now();
+      final reminder= AppointmentReminder(
+        id: UniqueKey().toString(),
+        title: _appointmentNameController.text,
+        time: DateTime(
+          now.year,
+          now.month,
+          now.day,
+          selectedTime.hour,
+          selectedTime.minute,
+        ),
+        location: _locationController.text,
+      );
+      final saveReminderAppointment= GetIt.instance<SaveReminder>();
+      saveReminderAppointment(reminder).then((_) {
+        Navigator.pop(context);
+      }).catchError((error) {
+        print('Error saving reminder: $error');
+      });
+      }
+    }
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -95,6 +124,7 @@ class _AddNewAppointmentReminderScreenState extends State<AddNewAppointmentRemin
     Padding(
       padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
      child: TextFormField(
+       controller: _appointmentNameController,
        maxLines: 1,
     decoration: InputDecoration(
        hintText: 'Enter Appointment Name',
@@ -135,6 +165,7 @@ SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
             child: TextFormField(
+              controller: _locationController,
               maxLines: 1,
               decoration: InputDecoration(
                 hintText: 'Enter Location',
@@ -224,9 +255,7 @@ SizedBox(height: 10),
               width: 130,
               height: 45,
               child: TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+                onPressed: _saveReminderAppointment,
                 style: TextButton.styleFrom(
                   foregroundColor: Colors.white,
                   backgroundColor: Styles.primaryColor,
