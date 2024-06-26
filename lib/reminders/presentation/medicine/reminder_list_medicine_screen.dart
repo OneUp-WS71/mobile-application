@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mobile_application/reminders/application/usecases/delete_reminder.dart';
 import 'package:mobile_application/reminders/domain/entities/reminder.dart';
 
+import '../../application/usecases/get_all_medicine_reminders.dart';
 import '../../application/usecases/get_all_reminders.dart';
 import '../../domain/entities/medicine_reminder.dart';
 
@@ -13,10 +14,10 @@ class ReminderListMedicineScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final getAllReminders=GetIt.instance<GetAllReminders>();
+    final getAllMedicineReminders = GetIt.instance<GetAllMedicineReminders>();
 
     return FutureBuilder<List<Reminder>>(
-      future: getAllReminders(),
+      future: getAllMedicineReminders(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());

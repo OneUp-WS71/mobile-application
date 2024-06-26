@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:mobile_application/common/styles/styles.dart';
 
 import '../../application/usecases/delete_reminder.dart';
+import '../../application/usecases/get_all_appointment_reminders.dart';
 import '../../application/usecases/get_all_reminders.dart';
 import '../../domain/entities/appointment_reminder.dart';
 import '../../domain/entities/reminder.dart';
@@ -13,17 +14,17 @@ class ReminderListAppointmentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final getAllReminders = GetIt.instance<GetAllReminders>();
+    final getAllAppointmentsReminders= GetIt.instance<GetAllAppointmentReminders>();
 
     return FutureBuilder <List<Reminder>>(
-        future: getAllReminders(),
+        future: getAllAppointmentsReminders(),
         builder: (context, snapshot){
         if (snapshot.connectionState == ConnectionState.waiting) {
            return Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Center(child: Text('No reminders found.'));
+          return Center(child: Text(' '));
        } else {
          final reminders = snapshot.data!;
         return ListView.builder(
