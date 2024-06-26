@@ -1,18 +1,71 @@
 import 'package:flutter/material.dart';
+
+import 'package:mobile_application/elderlyProfile/presentation/profile/profile_screen.dart';
+import 'package:mobile_application/security/application/datasources/provider.dart';
+import 'package:mobile_application/security/application/datasources/user_datasources.dart';
+import 'package:mobile_application/security/application/models/user_userdb.dart';
 import 'package:mobile_application/common/styles/styles.dart';
 import 'package:mobile_application/security/presentation/register/register_keeper_screen.dart';
+import 'package:provider/provider.dart';
 
-class LoginScreen extends StatelessWidget {
-  static const String name = 'Login_screen';
+
+class LoginScreen extends StatefulWidget {
 
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  State<LoginScreen> createState() => _LoginScreenState();
+}
 
+class _LoginScreenState extends State<LoginScreen> {
+
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  UserUserDb? userDetail;
+  bool _error = false;
+  @override
+  void initState(){
+    super.initState();
+    
+    
+  }
+  Future<void> fetchUserDetail(String username) async {
+    print('---username--- ${username}');
+    try{
+      userDetail = await UserDataProvider().getUserByName(username);
+      print('---userDetail--- ${userDetail}');
+      _error = false;
+    }catch(e) {
+      _error = true;
+    }
+    if(userDetail?.username == _usernameController.text && userDetail?.password == _passwordController.text){
+      _error = false;
+      
+    }
+    
+    setState(() {});
+  }
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+  @override
+  Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-
+    final userModel = Provider.of<UserModel>(context);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (userModel.username != null) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProfilePage(),
+          ),
+        );
+      }
+    });
     return Container(
         decoration: BoxDecoration(
         color: Styles.primaryColor),
@@ -54,7 +107,7 @@ class LoginScreen extends StatelessWidget {
                     children: [
                       const SizedBox(height: 20),
                        Text(
-                        'Login',
+                        "Login ",
                         style: TextStyle(
                           fontSize: 40,
                           fontFamily: Styles.headingFont,
@@ -66,7 +119,7 @@ class LoginScreen extends StatelessWidget {
                       Padding(
                         padding:EdgeInsets.only(right: screenWidth * 0.60),
                         child: Text(
-                          'Email',
+                          'username',
                           style: TextStyle(
                             fontSize: 20,
                             fontFamily: Styles.headingFont,
@@ -79,9 +132,10 @@ class LoginScreen extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(
                             vertical: 0, horizontal: 30),
                         child: TextFormField(
+                          controller: _usernameController,
                           maxLines: 1,
                           decoration: InputDecoration(
-                            hintText: 'Enter your email',
+                            hintText: 'Enter your username',
                             prefixIcon: Icon(
                               Icons.person,
                               color: Styles.primaryColor,
@@ -121,6 +175,7 @@ class LoginScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                           vertical: 0, horizontal: 30),
                         child: TextFormField(
+                          controller: _passwordController,
                           maxLines: 1,
                           decoration: InputDecoration(
                             hintText: 'Confirm your password',
@@ -145,6 +200,13 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                       ),
+                      _error == true ?
+                      Text(
+                        _error == true ? "Contraseña o Email Incorrecta": "" ,
+                      )
+                      :
+                      const SizedBox(),
+                      
                       const SizedBox(height: 10),
                       Padding(
                           padding:EdgeInsets.only(left: screenWidth * 0.40),
@@ -166,7 +228,19 @@ class LoginScreen extends StatelessWidget {
                         width: 250,
                         height: 50,
                         child: ElevatedButton(
-                          onPressed: (){},
+                          onPressed: (){
+                            if (userModel.username != null) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ProfilePage(),
+                                ),
+                              );
+                            }
+                            Provider.of<UserModel>(context, listen: false).fetchUserDetail(_usernameController.text);
+                            print('-----provider------- ${userModel.username}');
+                            
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Styles.primaryColor,
                             shape: RoundedRectangleBorder(
@@ -194,10 +268,11 @@ class LoginScreen extends StatelessWidget {
                           ),
                           TextButton(
                             onPressed: (){
+                              Provider.of<UserModel>(context, listen: false).setUser(null);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const RegisterKeeperScreen(),
+                                  builder: (context) =>  RegisterKeeperScreen(),
                                 ),
                               );
                             },

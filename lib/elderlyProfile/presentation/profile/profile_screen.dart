@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:mobile_application/common/widgets/custom_app_bar.dart';
 import 'package:mobile_application/common/widgets/navigation_bar.dart';
+import 'package:mobile_application/security/application/datasources/provider.dart';
+import 'package:mobile_application/security/application/models/user_userdb.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {
   static const String name = 'profile_screen';
@@ -8,18 +12,49 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       appBar: CustomAppBar(title: 'Profile'),
-      bottomNavigationBar: const NavigationMenu(currentPageIndex: 4,),
-      body: const Profile_screen(),
+      bottomNavigationBar: NavigationMenu(currentPageIndex: 4,),
+      body: Profile_screen(),
     );
   }
 }
-class Profile_screen extends StatelessWidget {
+class Profile_screen extends StatefulWidget {
   const Profile_screen({super.key});
 
   @override
+  State<Profile_screen> createState() => _Profile_screenState();
+}
+
+class _Profile_screenState extends State<Profile_screen> {
+  UserUserDb? userDetail;
+  bool _error = false;
+   Future<void> fetchUserDetail() async {
+    try{
+
+      //userDetail = await UserDataProvider().getUserByName(username);
+
+      _error = false;
+    }catch(e) {
+      _error = true;
+    }
+    
+    setState(() {});
+  }
+  @override
+  void initState(){
+    super.initState();
+  }
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+// Mueve esto aquí
+    fetchUserDetail(); // Llama a la función después de obtener el username
+  }
+  @override
   Widget build(BuildContext context) {
+    final username = Provider.of<UserModel>(context).username;
+    print('-----username----- ${username}');
     return  Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -44,9 +79,12 @@ class Profile_screen extends StatelessWidget {
             
           ),
           const SizedBox(height: 7,),
-          const Text(
-            "Emerson",
-            style: TextStyle(
+          Text(
+            username?.patients == [] ?
+            username!.patients[1].name:
+            "string"
+            ,
+            style: const TextStyle(
                           color: Color.fromRGBO(99, 102, 241, 1),
                           fontWeight: FontWeight.w800,
                           fontSize: 28),),
@@ -71,86 +109,91 @@ class Profile_screen extends StatelessWidget {
                         fontWeight: FontWeight.w800,
                         fontSize: 25),),
                     const SizedBox(height: 15,),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                         "Emergency number: ",
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w800,
                           fontSize: 18),),
                           Text(
-                          "+51 942 985 325",
-                          style: TextStyle(
+                            username?.patients == [] ?
+                          userDetail!.patients![1].date: "",
+                          style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w800,
                             fontSize: 18),),
                       ],
                     ),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(
-                        "Age: ",
+                        const Text(
+                        "Born: ",
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w800,
                           fontSize: 18),),
                           Text(
-                          "58 años",
-                          style: TextStyle(
+                            username?.patients == [] ?
+                          userDetail!.patients[1].date: "",
+                          style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w800,
                             fontSize: 18),),
                       ],
                     ),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                         "Height: ",
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w800,
                           fontSize: 18),),
                           Text(
-                          "1,75 m",
-                          style: TextStyle(
+                            username?.patients == [] ?
+                          ' ${userDetail!.patients![1].height.toString()} m': "",
+                          style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w800,
                             fontSize: 18),),
                       ],
                     ),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                         "Weight: ",
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w800,
                           fontSize: 18),),
                           Text(
-                          "70 kg",
-                          style: TextStyle(
+                            username?.patients == [] ?
+                          '${userDetail!.patients![1].weight} Kg' : "",
+                          style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w800,
                             fontSize: 18),),
                       ],
                     ),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                         "Address: ",
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w800,
                           fontSize: 18),),
                           Text(
-                          "Los olivos, calle Cleto 123",
-                          style: TextStyle(
+                            username?.patients == [] ?
+                          userDetail!.patients![1].address : "",
+                          style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w800,
                             fontSize: 18),),
@@ -159,7 +202,7 @@ class Profile_screen extends StatelessWidget {
                     const SizedBox(height: 25,),
                     TextButton(
                       style: TextButton.styleFrom(
-                        backgroundColor: Color.fromRGBO(89, 78, 207, 1),
+                        backgroundColor: const Color.fromRGBO(89, 78, 207, 1),
                       ),
                       onPressed: null, 
                       child: const Text("Edit", style: TextStyle(color: Colors.white),)),
