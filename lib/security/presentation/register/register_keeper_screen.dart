@@ -1,10 +1,38 @@
 import 'package:flutter/material.dart';
+
 import 'package:mobile_application/common/styles/styles.dart';
+import 'package:mobile_application/security/application/datasources/provider.dart';
+import 'package:mobile_application/security/application/models/user_userdb.dart';
 import 'package:mobile_application/security/presentation/register/widgets/terms_condition_screen.dart';
 import 'package:mobile_application/security/presentation/register/register_keeper_data_screen.dart';
+import 'package:provider/provider.dart';
 
-class RegisterKeeperScreen extends StatelessWidget {
-  const RegisterKeeperScreen({Key? key}) : super(key: key);
+class RegisterKeeperScreen extends StatefulWidget {
+  RegisterKeeperScreen({Key? key}) : super(key: key);
+
+  @override
+  State<RegisterKeeperScreen> createState() => _RegisterKeeperScreenState();
+}
+
+class _RegisterKeeperScreenState extends State<RegisterKeeperScreen> {
+
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _lastnameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  
+  UserUserDb? userDetail;
+  bool _error = false;
+  
+  @override
+  void initState(){
+    super.initState();  
+    
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -12,8 +40,9 @@ class RegisterKeeperScreen extends StatelessWidget {
     bool isChecked = false;
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-
+    
     return Container(
+      
         decoration: BoxDecoration(
             color: Styles.primaryColor),
         child: Scaffold(
@@ -81,6 +110,7 @@ class RegisterKeeperScreen extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(
                                   vertical: 0, horizontal: 30),
                               child: TextFormField(
+                                controller: _emailController,
                                 maxLines: 1,
                                 decoration: InputDecoration(
                                   hintText: 'Enter your email',
@@ -110,7 +140,7 @@ class RegisterKeeperScreen extends StatelessWidget {
                           Padding(
                             padding:EdgeInsets.only(right: screenWidth * 0.60),
                             child: Text(
-                              'Name',
+                              'Username',
                               style: TextStyle(
                                 fontSize: 20,
                                 fontFamily: Styles.headingFont,
@@ -123,9 +153,10 @@ class RegisterKeeperScreen extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 0, horizontal: 30),
                             child: TextFormField(
+                              controller: _usernameController,
                               maxLines: 1,
                               decoration: InputDecoration(
-                                hintText: 'Enter your name',
+                                hintText: 'Enter your username',
                                 prefixIcon: Icon(
                                   Icons.lock,
                                   color: Styles.primaryColor,
@@ -164,6 +195,7 @@ class RegisterKeeperScreen extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 0, horizontal: 30),
                             child: TextFormField(
+                              controller: _passwordController,
                               maxLines: 1,
                               decoration: InputDecoration(
                                 hintText: 'Enter your password',
@@ -189,6 +221,132 @@ class RegisterKeeperScreen extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 20),
+                          const SizedBox(height: 10),
+                          Padding(
+                            padding:EdgeInsets.only(right: screenWidth * 0.60),
+                            child: Text(
+                              'Name',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: Styles.headingFont,
+                                fontWeight: FontWeight.bold,
+                                color: Styles.primaryColor,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 30),
+                            child: TextFormField(
+                              controller: _nameController,
+                              maxLines: 1,
+                              decoration: InputDecoration(
+                                hintText: 'Enter your name',
+                                prefixIcon: Icon(
+                                  Icons.lock,
+                                  color: Styles.primaryColor,
+                                ),
+                                contentPadding: const EdgeInsets.all(20),
+                                hintStyle: const TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 18,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                  borderSide: BorderSide(
+                                    color: Styles.primaryColor,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Padding(
+                            padding:EdgeInsets.only(right: screenWidth * 0.60),
+                            child: Text(
+                              'lasname',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: Styles.headingFont,
+                                fontWeight: FontWeight.bold,
+                                color: Styles.primaryColor,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 30),
+                            child: TextFormField(
+                              controller: _lastnameController,
+                              maxLines: 1,
+                              decoration: InputDecoration(
+                                hintText: 'Enter your lastname',
+                                prefixIcon: Icon(
+                                  Icons.lock,
+                                  color: Styles.primaryColor,
+                                ),
+                                contentPadding: const EdgeInsets.all(20),
+                                hintStyle: const TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 18,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                  borderSide: BorderSide(
+                                    color: Styles.primaryColor,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Padding(
+                            padding:EdgeInsets.only(right: screenWidth * 0.60),
+                            child: Text(
+                              'phone',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: Styles.headingFont,
+                                fontWeight: FontWeight.bold,
+                                color: Styles.primaryColor,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 30),
+                            child: TextFormField(
+                              controller: _phoneController,
+                              maxLines: 1,
+                              decoration: InputDecoration(
+                                hintText: 'Enter your phone',
+                                prefixIcon: Icon(
+                                  Icons.lock,
+                                  color: Styles.primaryColor,
+                                ),
+                                contentPadding: const EdgeInsets.all(20),
+                                hintStyle: const TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 18,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                  borderSide: BorderSide(
+                                    color: Styles.primaryColor,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                           Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -229,10 +387,19 @@ class RegisterKeeperScreen extends StatelessWidget {
                             height: 50,
                             child: ElevatedButton(
                               onPressed: (){
-                                Navigator.push(
-                                  context,
-                                MaterialPageRoute(builder: (context) =>  const RegisterKeeperDataScreen()),
-                                );
+                                print('-----username221311------- ${Provider.of<UserModel>(context, listen: false).username}');
+                                if (Provider.of<UserModel>(context, listen: false).username != null) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => RegisterKeeperDataScreen(),
+                                    ),
+                                  );
+                                }
+                                UserUserDb user = UserUserDb(
+                                  id: 0, username: _usernameController.text, name: _nameController.text, lastname: _lastnameController.text, phone: _phoneController.text , password: _passwordController.text, email: _emailController.text, patients: []);
+                                Provider.of<UserModel>(context, listen: false).postRegister(context, user);
+
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Styles.primaryColor,
