@@ -1,12 +1,12 @@
 import '../../domain/entities/reminder.dart';
 import '../../domain/repositories/reminder_repository.dart';
 
-class GetAllReminders {
+class SaveReminder {
   final ReminderRepository repository;
 
-  GetAllReminders(this.repository);
+  SaveReminder(this.repository);
 
-  Future<List<Reminder>> call() {
-    return repository.getAllReminders();
+  Future<void> call(Reminder reminder) {
+    return repository.saveReminder(reminder);
   }
 }

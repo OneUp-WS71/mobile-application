@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_application/splash_screen.dart';
+import 'injections.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  setupDependencies();
   runApp(const MyApp());
 }
 

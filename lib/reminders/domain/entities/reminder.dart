@@ -1,5 +1,5 @@
 class Reminder {
-  final int id;
+  final String id;
   final String title;
   final DateTime time;
 Reminder({

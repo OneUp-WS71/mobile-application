@@ -4,7 +4,7 @@ class AppointmentReminder extends Reminder {
   final String location;
 
   AppointmentReminder({
-    required int id,
+    required String id,
     required String title,
     required DateTime time,
     required this.location,

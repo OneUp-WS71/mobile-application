@@ -11,9 +11,9 @@ class ReminderScreen extends StatefulWidget {
   const ReminderScreen({Key? key}) : super(key: key);
 
   @override
-  _ReminderMedicineScreenState createState() => _ReminderMedicineScreenState();
+  _ReminderScreenState createState() => _ReminderScreenState();
 }
-class _ReminderMedicineScreenState extends State<ReminderScreen> {
+class _ReminderScreenState extends State<ReminderScreen> {
   int _currentIndex = 0;
 
   @override

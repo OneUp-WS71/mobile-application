@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_application/common/styles/styles.dart';
+import 'package:get_it/get_it.dart';
+import 'package:mobile_application/reminders/domain/entities/medicine_reminder.dart';
+
+import '../../../application/usecases/save_reminder.dart';
 
 class AddNewMedicineReminderScreen extends StatefulWidget {
   const AddNewMedicineReminderScreen({Key? key}) : super(key: key);
@@ -9,6 +13,8 @@ class AddNewMedicineReminderScreen extends StatefulWidget {
 
 class _AddNewMedicineReminderScreenState extends State<AddNewMedicineReminderScreen> {
   TimeOfDay selectedTime = TimeOfDay.now();
+  TextEditingController _medicineNameController = TextEditingController();
+  TextEditingController _dosageController = TextEditingController();
 
   Map<String, bool> daysOfWeek = {
     'Monday': false,
@@ -71,6 +77,21 @@ class _AddNewMedicineReminderScreenState extends State<AddNewMedicineReminderScr
       });
   }
 
+  void _saveReminder(){
+    final reminder= MedicineReminder(
+        id: UniqueKey().toString(),
+        title: _medicineNameController.text,
+        time: DateTime(selectedTime.hour, selectedTime.minute),
+        dosage: _dosageController.text,
+        frequency: daysOfWeek.keys.where((key) => daysOfWeek[key]!).toList(),
+    );
+      final saveReminder = GetIt.instance<SaveReminder>();
+      saveReminder(reminder).then((_){
+        Navigator.pop(context);
+      }).catchError((error){
+      print ('Error saving reminder: $error');
+      });
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -107,6 +128,7 @@ class _AddNewMedicineReminderScreenState extends State<AddNewMedicineReminderScr
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
               child: TextFormField(
+                controller: _medicineNameController,
               maxLines: 1,
               decoration: InputDecoration(
                 hintText: 'Enter Medicine Name',
@@ -147,6 +169,7 @@ class _AddNewMedicineReminderScreenState extends State<AddNewMedicineReminderScr
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
             child: TextFormField(
+              controller: _dosageController,
               maxLines: 1,
               decoration: InputDecoration(
                 hintText: 'Enter Dosage',
@@ -264,9 +287,7 @@ class _AddNewMedicineReminderScreenState extends State<AddNewMedicineReminderScr
               width: 130,
               height: 45,
               child: TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+                onPressed: _saveReminder,
                 style: TextButton.styleFrom(
                   foregroundColor: Colors.white,
                   backgroundColor: Styles.primaryColor,

@@ -1,23 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_application/common/styles/styles.dart';
+import 'package:get_it/get_it.dart';
+import 'package:mobile_application/reminders/domain/entities/reminder.dart';
+
+import '../../application/usecases/get_all_reminders.dart';
+import '../../domain/entities/medicine_reminder.dart';
 
 class ReminderListMedicineScreen extends StatelessWidget {
   const ReminderListMedicineScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListView(children: [
-      ReminderItem(
-        medicineName: 'Paracetamol',
-        dosage: '2 tablets',
-        time: '8:00 AM',
-      ),
-      ReminderItem(
-        medicineName: 'Ibuprofen',
-        dosage: '1 tablet',
-        time: '12:00 PM',
-      ),
-    ]);
+    final getAllReminders=GetIt.instance<GetAllReminders>();
+
+    return FutureBuilder<List<Reminder>>(
+      future: getAllReminders(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        }else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return Center(child: Text('No reminders found.'));
+        } else {
+            final reminders = snapshot.data!;
+            return ListView.builder(
+              itemCount: reminders.length,
+              itemBuilder: (context, index) {
+                final reminder = reminders[index] as MedicineReminder;
+                return ReminderItem(
+                  medicineName: reminder.title,
+                  dosage: reminder.dosage,
+                  time: reminder.time.toIso8601String(),
+                );
+               },
+            );
+          }
+        }
+    );
   }
 }
 
