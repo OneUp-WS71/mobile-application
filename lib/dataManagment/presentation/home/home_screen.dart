@@ -31,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   //variables para peso y altura
   double  weight=0.0;
   double  height=0.0;
+  double bmi = 0;
 
   @override
   void initState() {
@@ -79,6 +80,10 @@ class _HomeScreenState extends State<HomeScreen> {
     if (user != null && user.patients.isNotEmpty) {
       weight = user.patients[0].weight;
       height = user.patients[0].height;
+    }
+    //calculate BMI
+    if (height != 0) {
+      bmi = weight / ((height / 100) * (height / 100));
     }
 
     DateTime now = DateTime.now();
@@ -136,17 +141,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     MeasureBox(
                       title: 'Weight',
                       icon: Icons.fitness_center,
-                      value: '$weight kg',
+                      value: '${weight.toStringAsFixed(1)} kg',
                     ),
                     MeasureBox(
                       title: 'Height',
                       icon: Icons.height,
-                      value: '$height cm',
+                      value: '${height.toStringAsFixed(1)}  m',
                     ),
                     MeasureBox(
                       title: 'BMI',
                       icon: Icons.monitor_weight,
-                      value: (weight / ((height / 100) * (height / 100))).toStringAsFixed(1),
+                      value: bmi.toStringAsFixed(1),
                     ),
                   ],
                 ),
