@@ -36,7 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _fetchReportData();
-    _fetchUserData();
   }
   Future<void>_fetchReportData() async{
     try {
@@ -74,27 +73,14 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Future<void> _fetchUserData() async {
-    try {
-      final user = await UserDataProvider().getUserByName('username');
-      if (user.patients.isNotEmpty) {
-        final patient = user.patients.first;
-        setState(() {
-          weight = patient.weight;
-          height = patient.height;
-        });
-      }
-    } catch (e) {
-      print('Failed to fetch user data: $e');
-    }
-
-  }
-
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context).username;
-    weight= user!.patients[0].weight;
-    height = user!.patients[0].height;
+    if (user != null && user.patients.isNotEmpty) {
+      weight = user.patients[0].weight;
+      height = user.patients[0].height;
+    }
+
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('EEEE, MMMM dd').format(now);
     return Scaffold(
