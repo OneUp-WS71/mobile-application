@@ -33,6 +33,7 @@ class _LocationScreenState extends State<LocationScreen> {
 
   Future<void> _fetchReportData() async {
     try {
+      //final report = Provider.of<UserModel>(context).report;
       final report = await serviceLocator<GetReportById>()(widget.userId!);
       setState(() {
         latitude = double.parse(report.latitude);

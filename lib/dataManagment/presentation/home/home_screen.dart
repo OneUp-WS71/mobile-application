@@ -4,9 +4,11 @@ import 'package:mobile_application/common/widgets/custom_app_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_application/dataManagment/presentation/widgets/measure_box.dart';
 import 'package:mobile_application/common/widgets/navigation_bar.dart';
+import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../injections.dart';
+import '../../../security/application/datasources/provider.dart';
 import '../../../security/application/datasources/user_datasources.dart';
 import '../../application/use_cases/get_report_by_id.dart';
 import '../widgets/vital_signs_box.dart';
@@ -90,6 +92,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserModel>(context).username;
+    weight= user!.patients[0].weight;
+    height = user!.patients[0].height;
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('EEEE, MMMM dd').format(now);
     return Scaffold(
