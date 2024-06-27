@@ -5,10 +5,15 @@ import 'package:intl/intl.dart';
 import 'package:mobile_application/dataManagment/presentation/widgets/measure_box.dart';
 import 'package:mobile_application/common/widgets/navigation_bar.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:mobile_application/dataManagment/presentation/widgets/vital_signs_box.dart';
+
+import '../../../injections.dart';
+import '../../../security/application/datasources/user_datasources.dart';
+import '../../application/use_cases/get_report_by_id.dart';
+import '../widgets/vital_signs_box.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final int ? userId;
+  const HomeScreen({Key? key,  this.userId}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -19,25 +24,69 @@ class _HomeScreenState extends State<HomeScreen> {
   final _pageController = PageController(initialPage: 1);
 
   //Lista de vital signs
-  final List<Map<String,dynamic>> vitalSignsData=[
-    {
-      'title': 'Heart Rate',
-      'measure':'75 bpm',
-      'value':'Stable',
-      'icon': Icons.favorite,
-      'iconColor': Colors.red,
-      'image': 'assets/images/Latido.png',
-    },
-    {
-      'title': 'Temperature',
-      'measure':'36.5 °C',
-      'value':'Stable',
-      'icon': Icons.thermostat,
-      'iconColor': Colors.lightBlueAccent,
-      'image': 'assets/images/temperature.png',
-    },
+  List<Map<String,dynamic>> vitalSignsData=[];
 
-  ];
+  //variables para peso y altura
+  double  weight=0.0;
+  double  height=0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchReportData();
+    _fetchUserData();
+  }
+  Future<void>_fetchReportData() async{
+    try {
+      final report = await serviceLocator<GetReportById>()(widget.userId!);
+      setState(() {
+        vitalSignsData = [
+      {
+        'title': 'Heart Rate',
+        'measure': '${report.heartRate} bpm',
+        'value': 'Stable',
+        'icon': Icons.favorite,
+        'iconColor': Colors.red,
+        'image': 'assets/images/Latido.png',
+      },
+      {
+        'title': 'Temperature',
+        'measure': '${report.temperature} °C',
+        'value': 'Stable',
+        'icon': Icons.thermostat,
+        'iconColor': Colors.lightBlueAccent,
+        'image': 'assets/images/temperature.png',
+      },
+      {
+        'title': 'Breathing frequency',
+        'measure': '${report.breathingFrequency} rpm',
+        'value': 'Stable',
+        'icon': Icons.air_rounded,
+        'iconColor': Colors.blueAccent,
+        'image': 'assets/images/freRespiratorio.png',
+      },
+    ];
+    });
+    } catch (e) {
+      print('Failed to fetch report: $e');
+    }
+  }
+
+  Future<void> _fetchUserData() async {
+    try {
+      final user = await UserDataProvider().getUserByName('username');
+      if (user.patients.isNotEmpty) {
+        final patient = user.patients.first;
+        setState(() {
+          weight = patient.weight;
+          height = patient.height;
+        });
+      }
+    } catch (e) {
+      print('Failed to fetch user data: $e');
+    }
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,21 +141,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       _indicatorSlider = index;
                     });
                   },
-                  children: const [
+                  children:  [
                     MeasureBox(
                       title: 'Weight',
                       icon: Icons.fitness_center,
-                      value: '70 kg',
+                      value: '$weight kg',
                     ),
                     MeasureBox(
                       title: 'Height',
                       icon: Icons.height,
-                      value: '170 cm',
+                      value: '$height cm',
                     ),
                     MeasureBox(
                       title: 'BMI',
                       icon: Icons.monitor_weight,
-                      value: '24.2',
+                      value: (weight / ((height / 100) * (height / 100))).toStringAsFixed(1),
                     ),
                   ],
                 ),
