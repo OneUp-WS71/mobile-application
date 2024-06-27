@@ -10,14 +10,15 @@ class UserModel with ChangeNotifier {
   UserUserDb? get username2 => _username2;
   bool get error => _error;
 
-  Future<void> fetchUserDetail(String username) async {
+  Future<void> fetchUserDetail(String username, String password) async {
     try{
         _username = await UserDataProvider().getUserByName(username);
-      print('---username21312312--- ${_username}');
-      _error = false;
+        if(_username?.password != password){
+          _error = true;
+        }
     }
     catch(e){
-      _error = true;
+        _error = true;
     }
 
     }
@@ -26,14 +27,14 @@ class UserModel with ChangeNotifier {
     try{
       
       _username2 = await UserDataProvider().postUser(user);
-      print('---userDetail--- ${_username}');
-      _error = false;
 
-      print('---holadasdas--- ${_username}');
+
+
+
       
       
     }catch(e) {
-      _error = true;
+
     }
   }
   Future<void> postPatientRegister(Patient patient, int id)async{
@@ -41,13 +42,17 @@ class UserModel with ChangeNotifier {
       
       await UserDataProvider().postPatient(patient,  id);
       
+    // ignore: empty_catches
     }catch(e) {
-      _error = true;
     }
     
   }
 
   void setUser(UserUserDb? username) {
+    _username = username;
+    notifyListeners(); // Notifica a los oyentes que el estado ha cambiado
+  }
+  void seterror(UserUserDb? username) {
     _username = username;
     notifyListeners(); // Notifica a los oyentes que el estado ha cambiado
   }

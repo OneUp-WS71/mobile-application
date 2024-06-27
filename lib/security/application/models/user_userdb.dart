@@ -53,6 +53,7 @@ class Patient {
     final String name;
     final String address;
     final String date;
+    final String phone;
     final double weight;
     final double height;
 
@@ -61,6 +62,7 @@ class Patient {
         required this.name,
         required this.address,
         required this.date,
+        required this.phone,
         required this.weight,
         required this.height,
     });
@@ -70,6 +72,7 @@ class Patient {
         name: json["name"],
         address: json["address"],
         date: json["date"],
+        phone: json["phone"],
         weight: json["weight"],
         height: json["height"],
     );
@@ -79,6 +82,7 @@ class Patient {
         "name": name,
         "address": address,
         "date": date,
+        "phone": phone,
         "weight": weight,
         "height": height,
     };

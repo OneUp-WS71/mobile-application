@@ -23,29 +23,26 @@ class UserDataProvider{
   }
   Future<UserUserDb> postUser(UserUserDb user) async{
     try {
-      print('----user----- ${user.username}');
-      print('----user data----- ${user.toJson()}');
+
       Response response = await dio.post(
         '/users',
         data: user.toJson(),
       );
-      print('Response status: ${response.statusCode}');
-      print('Response data: ${response.data}');
+
       return UserUserDb.fromJson(response.data);
     } catch (e) {
       throw Exception('Error: $e');
     }
   }
-  Future<UserUserDb> postPatient(Patient patient, int id) async{
+  Future<Patient> postPatient(Patient patient, int id) async{
     try {
-      print('---id--- ${id.toString()}');
+
       Response response = await dio.post(
         '/patients/${id.toString()}',
         data: patient.toJson(),
       );
-      print('Response status: ${response.statusCode}');
-      print('Response data: ${response.data}');
-      return response.data;
+
+      return Patient.fromJson(response.data);
     } catch (e) {
       throw Exception('Error: $e');
     }

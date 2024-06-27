@@ -5,6 +5,7 @@ import 'package:mobile_application/dataManagment/presentation/home/home_screen.d
 import 'package:mobile_application/security/application/datasources/provider.dart';
 import 'package:mobile_application/security/application/datasources/user_datasources.dart';
 import 'package:mobile_application/security/application/models/user_userdb.dart';
+import 'package:mobile_application/security/presentation/login/login_screen.dart';
 import 'package:provider/provider.dart';
 
 class RegisterKeeperDataScreen extends StatefulWidget {
@@ -18,6 +19,7 @@ class RegisterKeeperDataScreen extends StatefulWidget {
 class _RegisterKeeperDataScreenState extends State<RegisterKeeperDataScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _weightController = TextEditingController();
   final TextEditingController _heightController = TextEditingController();
@@ -218,6 +220,7 @@ class _RegisterKeeperDataScreenState extends State<RegisterKeeperDataScreen> {
           padding: const EdgeInsets.symmetric(
               vertical: 0, horizontal: 30),
           child: TextFormField(
+            controller: _phoneController,
             maxLines: 1,
             decoration: InputDecoration(
               hintText: 'Enter your phone number',
@@ -337,13 +340,14 @@ class _RegisterKeeperDataScreenState extends State<RegisterKeeperDataScreen> {
               name: _usernameController.text, 
               address: _addressController.text, 
               date: _dateController.text, 
+              phone: _phoneController.text,
               weight: double.parse(_weightController.text), 
               height: double.parse(_heightController.text));
-
-            await Provider.of<UserModel>(context, listen: false).postPatientRegister(patient, userModel.username2!.id);
+            print('-----id------ ${Provider.of<UserModel>(context, listen: false).username2?.id}');
+            await Provider.of<UserModel>(context, listen: false).postPatientRegister(patient, Provider.of<UserModel>(context, listen: false).username2!.id);
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
+              MaterialPageRoute(builder: (context) => const LoginScreen()),
             );
 
           },

@@ -200,11 +200,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                       ),
-                      _error == true ?
-                      Text(
-                        _error == true ? "Contraseña o Email Incorrecta": "" ,
-                      )
-                      :
+
                       const SizedBox(),
                       
                       const SizedBox(height: 10),
@@ -229,16 +225,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 50,
                         child: ElevatedButton(
                           onPressed: (){
-                            if (userModel.username != null) {
-                              Navigator.push(
+
+                            Provider.of<UserModel>(context, listen: false).fetchUserDetail(_usernameController.text, _passwordController.text);
+                            Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => ProfilePage(),
                                 ),
                               );
-                            }
-                            Provider.of<UserModel>(context, listen: false).fetchUserDetail(_usernameController.text);
-                            print('-----provider------- ${userModel.username}');
                             
                           },
                           style: ElevatedButton.styleFrom(

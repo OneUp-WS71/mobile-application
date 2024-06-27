@@ -23,9 +23,7 @@ class _RegisterKeeperScreenState extends State<RegisterKeeperScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   
-  UserUserDb? userDetail;
-  bool _error = false;
-  
+
   @override
   void initState(){
     super.initState();  
@@ -387,18 +385,17 @@ class _RegisterKeeperScreenState extends State<RegisterKeeperScreen> {
                             height: 50,
                             child: ElevatedButton(
                               onPressed: (){
-                                print('-----username221311------- ${Provider.of<UserModel>(context, listen: false).username2}');
-                                if (Provider.of<UserModel>(context, listen: false).username2 != null) {
-                                  Navigator.push(
+
+      
+                                UserUserDb user = UserUserDb(
+                                  id: 0, username: _usernameController.text, name: _nameController.text, lastname: _lastnameController.text, phone: _phoneController.text , password: _passwordController.text, email: _emailController.text, patients: []);
+                                Provider.of<UserModel>(context, listen: false).postRegister(context, user);
+                                Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => RegisterKeeperDataScreen(),
                                     ),
                                   );
-                                }
-                                UserUserDb user = UserUserDb(
-                                  id: 0, username: _usernameController.text, name: _nameController.text, lastname: _lastnameController.text, phone: _phoneController.text , password: _passwordController.text, email: _emailController.text, patients: []);
-                                Provider.of<UserModel>(context, listen: false).postRegister(context, user);
 
                               },
                               style: ElevatedButton.styleFrom(
