@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
 import 'package:mobile_application/application/domain/datasources/user_datasource.dart';
-import 'package:mobile_application/application/infrastructure/model/userdb/user_userdb.dart';
+import 'package:mobile_application/security/application/models/user_userdb.dart';
 
 import '../../entities/user.dart';
 

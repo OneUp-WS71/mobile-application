@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_application/splash_screen.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'package:mobile_application/security/application/datasources/provider.dart';
+import 'package:mobile_application/splash_screen.dart';
+import 'injections.dart';
+import 'package:provider/provider.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  setupDependencies();
+  runApp(ChangeNotifierProvider(
+    create: (context) => UserModel(),
+    child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -17,7 +27,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      home: SplashScreen(),
+      home: const SplashScreen(),
 
     );
   }

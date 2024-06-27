@@ -2,11 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:mobile_application/common/styles/styles.dart';
 import 'package:mobile_application/common/widgets/custom_app_bar.dart';
 import 'package:mobile_application/reminders/presentation/medicine/reminder_list_medicine_screen.dart';
-import 'package:mobile_application/reminders/presentation/medicine/widgets/add_new_reminder_screen.dart';
+import 'package:mobile_application/reminders/presentation/medicine/widgets/add_new_medicine_reminder_screen.dart';
 import 'package:mobile_application/common/widgets/navigation_bar.dart';
+import 'package:mobile_application/reminders/presentation/appointment/reminder_list_appointment_screen.dart';
+import 'package:mobile_application/reminders/presentation/appointment/widgets/add_new_appointment_reminder_screen.dart';
 
-class ReminderMedicineScreen extends StatelessWidget {
-  const ReminderMedicineScreen({Key? key}) : super(key: key);
+class ReminderScreen extends StatefulWidget {
+  const ReminderScreen({Key? key}) : super(key: key);
+
+  @override
+  _ReminderScreenState createState() => _ReminderScreenState();
+}
+class _ReminderScreenState extends State<ReminderScreen> {
+  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +36,12 @@ class ReminderMedicineScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: TabBar(
+                  onTap: (index) {
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                  },
+
                   indicator: BoxDecoration(
                     color: Styles.primaryColor,
                     borderRadius: BorderRadius.circular(15),
@@ -60,7 +74,7 @@ class ReminderMedicineScreen extends StatelessWidget {
                 child: TabBarView(
                   children: [
                     ReminderListMedicineScreen(),
-                    Center(child: Text('Appointment')),
+                    ReminderListAppointmentScreen(),
                   ],
                 ),
               ),
@@ -72,7 +86,9 @@ class ReminderMedicineScreen extends StatelessWidget {
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return  AddNewReminderScreen();
+                  return _currentIndex== 0
+                      ?  AddNewMedicineReminderScreen()
+                      :  AddNewAppointmentReminderScreen(); // MODIDCAR POR ADDNEWAppointment
                 });
           },
           child: const Icon(

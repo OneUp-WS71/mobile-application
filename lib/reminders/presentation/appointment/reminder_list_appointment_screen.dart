@@ -1,66 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_application/common/styles/styles.dart';
-import 'package:get_it/get_it.dart';
-import 'package:mobile_application/reminders/application/usecases/delete_reminder.dart';
-import 'package:mobile_application/reminders/domain/entities/reminder.dart';
 
-import '../../application/usecases/get_all_medicine_reminders.dart';
+import '../../application/usecases/delete_reminder.dart';
+import '../../application/usecases/get_all_appointment_reminders.dart';
 import '../../application/usecases/get_all_reminders.dart';
-import '../../domain/entities/medicine_reminder.dart';
+import '../../domain/entities/appointment_reminder.dart';
+import '../../domain/entities/reminder.dart';
 
-class ReminderListMedicineScreen extends StatelessWidget {
-  const ReminderListMedicineScreen({Key? key}) : super(key: key);
+class ReminderListAppointmentScreen extends StatelessWidget {
+  const ReminderListAppointmentScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final getAllMedicineReminders = GetIt.instance<GetAllMedicineReminders>();
+    final getAllAppointmentsReminders= GetIt.instance<GetAllAppointmentReminders>();
 
-    return FutureBuilder<List<Reminder>>(
-      future: getAllMedicineReminders(),
-      builder: (context, snapshot) {
+    return FutureBuilder <List<Reminder>>(
+        future: getAllAppointmentsReminders(),
+        builder: (context, snapshot){
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+           return Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
-        }else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
           return Center(child: Text(' '));
-        } else {
-            final reminders = snapshot.data!;
-            return ListView.builder(
-              itemCount: reminders.length,
-              itemBuilder: (context, index) {
-                final reminder = reminders[index] as MedicineReminder;
-                return ReminderItem(
-                  id: reminder.id,
-                  medicineName: reminder.title,
-                  dosage: reminder.dosage,
-                  time: reminder.time,
-                );
-               },
-            );
-          }
-        }
-    );
-  }
+       } else {
+         final reminders = snapshot.data!;
+        return ListView.builder(
+       itemCount: reminders.length,
+        itemBuilder: (context, index) {
+        final reminder = reminders[index] as AppointmentReminder;
+          return AppointmentItem(
+            id: reminder.id,
+            appointmentName: reminder.title,
+            location: reminder.location,
+            time: reminder.time,
+          );
+            }
+           );
+         }
+       }
+     );
+    }
 }
 
-// Clase del item del reminder
 
-class ReminderItem extends StatelessWidget {
+class AppointmentItem extends StatelessWidget {
   final String id;
-  final String medicineName;
-  final String dosage;
+  final String appointmentName;
+  final String location;
   final DateTime time;
 
-  const ReminderItem({
+  const AppointmentItem({
     Key? key,
     required this.id,
-    required this.medicineName,
-    required this.dosage,
+    required this.appointmentName,
+    required this.location,
     required this.time,
   }) : super(key: key);
-
 
   void _deleteReminder(BuildContext context) {
     final deleteReminder = GetIt.instance<DeleteReminder>();
@@ -85,9 +83,9 @@ class ReminderItem extends StatelessWidget {
       color: Colors.white,
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: ListTile(
-        leading: Icon(Icons.medication_rounded, color: Styles.primaryColor),
+        leading: Icon(Icons.event_note_rounded, color: Styles.primaryColor),
         title: Text(
-          medicineName,
+          appointmentName,
           style: TextStyle(
             fontSize: 18,
             fontFamily: Styles.headingFont,
@@ -95,7 +93,7 @@ class ReminderItem extends StatelessWidget {
             color: Styles.primaryColor,
           ),
         ),
-        subtitle: Text('Dosage: $dosage, Time: $formattedTime'),
+        subtitle: Text('Location: $location, Time: $formattedTime'),
         isThreeLine: true,
         trailing: IconButton(
           icon: const Icon(Icons.delete),
