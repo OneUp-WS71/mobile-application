@@ -10,12 +10,10 @@ class UserModel with ChangeNotifier {
   UserUserDb? get username2 => _username2;
   bool get error => _error;
 
-  Future<void> fetchUserDetail(String username, String password) async {
+  Future<void> fetchUserDetail(String username) async {
     try{
         _username = await UserDataProvider().getUserByName(username);
-        if(_username?.password != password){
-          _error = true;
-        }
+        
     }
     catch(e){
         _error = true;

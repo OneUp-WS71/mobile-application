@@ -226,7 +226,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: ElevatedButton(
                           onPressed: (){
 
-                            Provider.of<UserModel>(context, listen: false).fetchUserDetail(_usernameController.text, _passwordController.text);
+                            Provider.of<UserModel>(context, listen: false).fetchUserDetail(_usernameController.text);
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(

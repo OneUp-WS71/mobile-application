@@ -37,7 +37,7 @@ class _Profile_screenState extends State<Profile_screen> {
   @override
   Widget build(BuildContext context) {
     final username = Provider.of<UserModel>(context).username;
-    print('-----username----- ${username!.patients[0].address}');
+
     return  Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -63,7 +63,7 @@ class _Profile_screenState extends State<Profile_screen> {
           ),
           const SizedBox(height: 7,),
           Text(
-            username?.patients == [] ?
+            (username?.patients == [] || username == null) ?
             "string":
             username!.patients[0].name
             ,
@@ -102,9 +102,9 @@ class _Profile_screenState extends State<Profile_screen> {
                           fontWeight: FontWeight.w800,
                           fontSize: 18),),
                           Text(
-                            username?.patients == [] ?
+                            (username?.patients == [] || username == null) ?
                             "":
-                            username.phone,
+                            username!.phone,
                           style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w800,
@@ -121,7 +121,7 @@ class _Profile_screenState extends State<Profile_screen> {
                           fontWeight: FontWeight.w800,
                           fontSize: 18),),
                           Text(
-                            username?.patients == [] ?
+                            (username?.patients == [] || username == null) ?
                             "":
                             username!.patients[0].date,
                           style: const TextStyle(
@@ -140,7 +140,7 @@ class _Profile_screenState extends State<Profile_screen> {
                           fontWeight: FontWeight.w800,
                           fontSize: 18),),
                           Text(
-                            username?.patients == [] ?
+                            (username?.patients == [] || username == null) ?
                             "":
                             ' ${username!.patients![0].height.toString()} m',
                           style: const TextStyle(
@@ -159,7 +159,7 @@ class _Profile_screenState extends State<Profile_screen> {
                           fontWeight: FontWeight.w800,
                           fontSize: 18),),
                           Text(
-                            username?.patients == [] ?
+                            (username?.patients == [] || username == null) ?
                             "":
                             '${username!.patients[0].weight} Kg',
                           style: const TextStyle(
@@ -178,7 +178,7 @@ class _Profile_screenState extends State<Profile_screen> {
                           fontWeight: FontWeight.w800,
                           fontSize: 18),),
                           Text(
-                            username?.patients == [] ?
+                            (username?.patients == [] || username == null)?
                             "":
                             username!.patients![0].address,
                           style: const TextStyle(
@@ -188,12 +188,7 @@ class _Profile_screenState extends State<Profile_screen> {
                       ],
                     ),
                     const SizedBox(height: 25,),
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        backgroundColor: const Color.fromRGBO(89, 78, 207, 1),
-                      ),
-                      onPressed: null, 
-                      child: const Text("Edit", style: TextStyle(color: Colors.white),)),
+                    
                   ],
                 ),
               ),
