@@ -5,12 +5,14 @@ class MeasureBox extends StatelessWidget {
   final String title;
   final IconData icon;
   final String value;
+  final String ? weightLevel;
 
   const MeasureBox({
     Key? key,
     required this.title,
     required this.icon,
     required this.value,
+    this.weightLevel,
   }) : super(key: key);
 
   @override
@@ -57,6 +59,16 @@ class MeasureBox extends StatelessWidget {
               color: Colors.black,
             ),
           ),
+          if(weightLevel != null)
+            Text(
+              weightLevel!,
+              style: TextStyle(
+                fontFamily: Styles.headingFont,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                color: Styles.primaryColor,
+              ),
+            ),
         ],
       ),
     );
