@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_application/common/styles/styles.dart';
+import 'package:mobile_application/dataManagment/presentation/widgets/vital_signs_chart_screen.dart';
 
 class VitalSignsBox extends StatelessWidget {
   final String title;
@@ -21,76 +22,85 @@ class VitalSignsBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-      padding: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 10,
-            offset: Offset(0, 5),
+    return GestureDetector(
+      onTap: (){
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context)=> VitalSignsChartScreen(),
           ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                children: [
-                  Icon(
-                    icon,
-                    size: 35,
-                    color: iconColor,
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    title,
-                    style: TextStyle(
-                      fontFamily: Styles.headingFont,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+        );
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+        padding: const EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 10,
+              offset: Offset(0, 5),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  children: [
+                    Icon(
+                      icon,
+                      size: 35,
                       color: iconColor,
                     ),
+                    SizedBox(width: 10),
+                    Text(
+                      title,
+                      style: TextStyle(
+                        fontFamily: Styles.headingFont,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: iconColor,
+                      ),
+                    ),
+
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  measure,
+                  style: TextStyle(
+                    fontFamily: Styles.headingFont,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 28,
+                    color: Colors.black,
                   ),
-
-                ],
-              ),
-              const SizedBox(height: 10),
-              Text(
-                measure,
-                style: TextStyle(
-                  fontFamily: Styles.headingFont,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 28,
-                  color: Colors.black,
                 ),
-              ),
-              SizedBox(width: 10),
-              // CLASE QUE MUESTRA SI ESTA ESTABLE O NO
-              Text(
-                value,
-                style: TextStyle(
-                  fontFamily: Styles.headingFont,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  color: iconColor,
+                SizedBox(width: 10),
+                // CLASE QUE MUESTRA SI ESTA ESTABLE O NO
+                Text(
+                  value,
+                  style: TextStyle(
+                    fontFamily: Styles.headingFont,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: iconColor,
+                  ),
                 ),
-              ),
 
-            ],
-          ),
-          const Spacer(),
-          Image.asset(
-              image,
-              width: 150,
-              height: 100,
-          ),
-        ],
+              ],
+            ),
+            const Spacer(),
+            Image.asset(
+                image,
+                width: 150,
+                height: 100,
+            ),
+          ],
+        ),
       ),
     );
   }
