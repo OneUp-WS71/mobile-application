@@ -21,13 +21,15 @@ class LocationScreen extends StatefulWidget {
 
 class _LocationScreenState extends State<LocationScreen> {
   late MapController _mapController;
-  late double latitude;
-  late double longitude;
+   double? latitude;
+   double? longitude;
 
   @override
   void initState() {
     super.initState();
     _mapController = MapController();
+    latitude = myPosition.latitude;
+    longitude = myPosition.longitude;
     _fetchReportData();
   }
 
@@ -36,8 +38,8 @@ class _LocationScreenState extends State<LocationScreen> {
       //final report = Provider.of<UserModel>(context).report;
       final report = await serviceLocator<GetReportById>()(widget.userId!);
       setState(() {
-        latitude = double.parse(report.latitude);
-        longitude = double.parse(report.longitude);
+        latitude = double.parse(report.latitude!);
+        longitude = double.parse(report.longitude!);
       });
     } catch (e) {
       print('Failed to fetch report: $e');
@@ -46,7 +48,7 @@ class _LocationScreenState extends State<LocationScreen> {
 
   void _gotoMyPosition() {
     if (latitude != null && longitude != null) {
-      _mapController.move(LatLng(latitude, longitude), 15.0);
+      _mapController.move(LatLng(latitude!, longitude!), 15.0);
     } // mover a myposition
   }
 
@@ -62,7 +64,7 @@ class _LocationScreenState extends State<LocationScreen> {
       FlutterMap(
         mapController: _mapController,
         options: MapOptions(
-           initialCenter: LatLng(latitude, longitude),
+           initialCenter: LatLng(latitude!, longitude!),
             initialZoom: 15.0,
           interactionOptions: InteractionOptions(
             flags: InteractiveFlag.all, // Habilita todas las interacciones por defecto
@@ -85,7 +87,7 @@ class _LocationScreenState extends State<LocationScreen> {
           MarkerLayer(
             markers:[
               Marker(
-                point: LatLng(latitude, longitude),
+                point: LatLng(latitude!, longitude!),
                 width: 80.0,
                 height: 80.0,
                 child: Icon(

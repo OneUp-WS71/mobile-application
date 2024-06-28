@@ -112,8 +112,7 @@ class _AddNewMedicineReminderScreenState extends State<AddNewMedicineReminderScr
               color: Styles.primaryColor,
             )),
       ),
-      content: Flexible(
-        child: SingleChildScrollView(
+      content: SingleChildScrollView(
             child: Column(children: [
               Padding(
               padding: EdgeInsets.only(right: screenWidth * 0.30),
@@ -265,7 +264,6 @@ class _AddNewMedicineReminderScreenState extends State<AddNewMedicineReminderScr
                 }).toList(),
               ),
             ])),
-      ),
       actions: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -31,12 +31,12 @@ class _HomeScreenState extends State<HomeScreen> {
   //variables para peso y altura
   double  weight=0.0;
   double  height=0.0;
+  double bmi = 0;
 
   @override
   void initState() {
     super.initState();
     _fetchReportData();
-    _fetchUserData();
   }
   Future<void>_fetchReportData() async{
     try {
@@ -74,27 +74,18 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Future<void> _fetchUserData() async {
-    try {
-      final user = await UserDataProvider().getUserByName('username');
-      if (user.patients.isNotEmpty) {
-        final patient = user.patients.first;
-        setState(() {
-          weight = patient.weight;
-          height = patient.height;
-        });
-      }
-    } catch (e) {
-      print('Failed to fetch user data: $e');
-    }
-
-  }
-
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context).username;
-    weight= user!.patients[0].weight;
-    height = user!.patients[0].height;
+    if (user != null && user.patients.isNotEmpty) {
+      weight = user.patients[0].weight;
+      height = user.patients[0].height;
+    }
+    //calculate BMI
+    if (height != 0) {
+      bmi = weight / ((height / 100) * (height / 100));
+    }
+
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('EEEE, MMMM dd').format(now);
     return Scaffold(
@@ -150,17 +141,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     MeasureBox(
                       title: 'Weight',
                       icon: Icons.fitness_center,
-                      value: '$weight kg',
+                      value: '${weight.toStringAsFixed(1)} kg',
                     ),
                     MeasureBox(
                       title: 'Height',
                       icon: Icons.height,
-                      value: '$height cm',
+                      value: '${height.toStringAsFixed(1)}  m',
                     ),
                     MeasureBox(
                       title: 'BMI',
                       icon: Icons.monitor_weight,
-                      value: (weight / ((height / 100) * (height / 100))).toStringAsFixed(1),
+                      value: bmi.toStringAsFixed(1),
                     ),
                   ],
                 ),
