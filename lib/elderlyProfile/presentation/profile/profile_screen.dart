@@ -5,6 +5,7 @@ import 'package:mobile_application/common/widgets/navigation_bar.dart';
 import 'package:mobile_application/security/application/datasources/provider.dart';
 import 'package:mobile_application/security/application/models/user_userdb.dart';
 import 'package:provider/provider.dart';
+import 'package:mobile_application/common/styles/styles.dart';
 
 class ProfilePage extends StatelessWidget {
   static const String name = 'profile_screen';
@@ -65,130 +66,160 @@ class _Profile_screenState extends State<Profile_screen> {
             const SizedBox(height: 7,),
             Text(
               (username?.patients == [] || username == null) ?
-              "string":
-              username!.patients[0].name
-              ,
-              style: const TextStyle(
-                            color: Color.fromRGBO(99, 102, 241, 1),
+              "Elderly Name":
+              username!.patients[0].name,
+              style: TextStyle(
+                            color: Colors.black87,
+                            fontFamily: Styles.headingFont,
                             fontWeight: FontWeight.w800,
-                            fontSize: 28),),
-            const SizedBox(height: 7,),
+                            fontSize: 35),),
+            SizedBox(height: 5,),
             Padding(
               padding:  const EdgeInsets.all(8.0),
               child: Container(
                 decoration:  BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: const Color.fromRGBO(99, 102, 241, 0.4)),
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 5.0,
+                      spreadRadius: 0.0,
+                      offset: Offset(1.0, 1.0),
+                    )
+                  ],
+                  color: Colors.white,
+                ),
                 height: 300,
                 width: double.infinity,
                 child:  Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
+                       Text(
                         "Basic Information",
                         style: TextStyle(
-                          color: Colors.black,
+                          color: Styles.primaryColor,
+                          fontFamily: Styles.headingFont,
                           fontWeight: FontWeight.w800,
-                          fontSize: 25),),
+                          fontSize: 27),),
                       const SizedBox(height: 15,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const Text(
+                          Icon(Icons.phone, color: Styles.primaryColor, size: 22,),
+                          SizedBox(width: 5,),
+                           Text(
                           "Emergency number: ",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 18),),
+                          style:  TextStyle(
+                              color: Colors.black,
+                              fontFamily: Styles.headingFont,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 20),),
                             Text(
                               (username?.patients == [] || username == null) ?
                               "":
                               username!.phone,
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.black,
+                              fontFamily: Styles.bodyFont,
                               fontWeight: FontWeight.w800,
-                              fontSize: 18),),
+                              fontSize: 20),),
                         ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const Text(
+                          Icon(Icons.calendar_today, color: Styles.primaryColor, size: 22,),
+                          SizedBox(width: 5,),
+                           Text(
                           "Born: ",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 18),),
+                          style:  TextStyle(
+                              color: Colors.black,
+                              fontFamily: Styles.headingFont,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 20),),
                             Text(
                               (username?.patients == [] || username == null) ?
                               "":
                               username!.patients[0].date,
-                            style: const TextStyle(
+                            style:  TextStyle(
                               color: Colors.black,
+                                fontFamily: Styles.bodyFont,
                               fontWeight: FontWeight.w800,
-                              fontSize: 18),),
+                              fontSize: 20),),
                         ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const Text(
+                          Icon(Icons.height_outlined, color: Styles.primaryColor, size: 22,),
+                          SizedBox(width: 5,),
+                           Text(
                           "Height: ",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 18),),
+                          style:  TextStyle(
+                              color: Colors.black,
+                              fontFamily: Styles.headingFont,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 20),),
                             Text(
                               (username?.patients == [] || username == null) ?
                               "":
                               ' ${username!.patients![0].height.toString()} m',
-                            style: const TextStyle(
+                            style:  TextStyle(
                               color: Colors.black,
+                                fontFamily: Styles.bodyFont,
                               fontWeight: FontWeight.w800,
-                              fontSize: 18),),
+                              fontSize: 20),),
                         ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const Text(
+                          Icon(Icons.monitor_weight, color: Styles.primaryColor, size: 22,),
+                          SizedBox(width: 5,),
+                           Text(
                           "Weight: ",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 18),),
+                          style:  TextStyle(
+                              color: Colors.black,
+                              fontFamily: Styles.headingFont,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 20),),
                             Text(
                               (username?.patients == [] || username == null) ?
                               "":
                               '${username!.patients[0].weight} Kg',
-                            style: const TextStyle(
+                            style:  TextStyle(
                               color: Colors.black,
+                                fontFamily: Styles.bodyFont,
                               fontWeight: FontWeight.w800,
-                              fontSize: 18),),
+                              fontSize: 20),),
                         ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const Text(
+                          Icon(Icons.maps_home_work, color: Styles.primaryColor, size: 22,),
+                          SizedBox(width: 5,),
+                           Text(
                           "Address: ",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 18),),
+                          style:  TextStyle(
+                              color: Colors.black,
+                              fontFamily: Styles.headingFont,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 20),),
                             Text(
                               (username?.patients == [] || username == null)?
                               "":
                               username!.patients![0].address,
-                            style: const TextStyle(
+                            style:  TextStyle(
                               color: Colors.black,
+                                fontFamily: Styles.bodyFont,
                               fontWeight: FontWeight.w800,
-                              fontSize: 18),),
+                              fontSize: 20),),
                         ],
                       ),
-                      const SizedBox(height: 25,),
+                      const SizedBox(height: 20,),
                       
                     ],
                   ),

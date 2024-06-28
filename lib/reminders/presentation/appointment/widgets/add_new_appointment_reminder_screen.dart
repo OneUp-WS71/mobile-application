@@ -12,7 +12,7 @@ class _AddNewAppointmentReminderScreenState extends State<AddNewAppointmentRemin
   TimeOfDay selectedTime = TimeOfDay.now();
   final TextEditingController _appointmentNameController = TextEditingController();
   final TextEditingController _locationController = TextEditingController();
-
+  bool _isErrorVisible = false;
 
   void _selectTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
@@ -66,9 +66,11 @@ class _AddNewAppointmentReminderScreenState extends State<AddNewAppointmentRemin
   }
 
   void _saveReminderAppointment() {
-    if (_appointmentNameController.text.isNotEmpty && selectedTime != null){
-      final now= DateTime.now();
-      final reminder= AppointmentReminder(
+    if (_appointmentNameController.text.isNotEmpty &&
+        selectedTime != null &&
+        _locationController.text.isNotEmpty) {
+      final now = DateTime.now();
+      final reminder = AppointmentReminder(
         id: UniqueKey().toString(),
         title: _appointmentNameController.text,
         time: DateTime(
@@ -80,15 +82,18 @@ class _AddNewAppointmentReminderScreenState extends State<AddNewAppointmentRemin
         ),
         location: _locationController.text,
       );
-      final saveReminderAppointment= GetIt.instance<SaveReminder>();
+      final saveReminderAppointment = GetIt.instance<SaveReminder>();
       saveReminderAppointment(reminder).then((_) {
         Navigator.pop(context);
       }).catchError((error) {
         print('Error saving reminder: $error');
       });
-      }
+    } else {
+      setState(() {
+        _isErrorVisible = true;
+      });
     }
-
+  }
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -229,8 +234,24 @@ SizedBox(height: 10),
               ],
             ),
           ),
-       ],),
+          if (_isErrorVisible)
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.error, color: Colors.red),
+                  SizedBox(width: 5),
+                  Text(
+                    'Please complete all fields',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ],
+              ),
+            ),
+        ],
         ),
+      ),
       ),
       actions: [
         Row(

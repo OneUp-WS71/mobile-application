@@ -30,22 +30,85 @@ class _LoginScreenState extends State<LoginScreen> {
     
   }
   Future<void> fetchUserDetail(String username) async {
-    print('---username--- ${username}');
-    try{
+    print('---username--- $username');
+    try {
+      Provider.of<UserModel>(context, listen: false).fetchUserDetail(username);
       userDetail = await UserDataProvider().getUserByName(username);
-      print('---userDetail--- ${userDetail}');
-      _error = false;
-    }catch(e) {
+      print('---userDetail--- $userDetail');
+      if (userDetail?.username == _usernameController.text &&
+          userDetail?.password == _passwordController.text) {
+        _error = false;
+      } else {
+        _error = true;
+      }
+    } catch (e) {
       _error = true;
     }
-    if(userDetail?.username == _usernameController.text && userDetail?.password == _passwordController.text){
-      _error = false;
-      
-    }
-    
     setState(() {});
+    if (_error) {
+      _showErrorDialog();
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProfilePage(),
+        ),
+      );
+    }
   }
-  @override
+  void _showErrorDialog(){
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Center(
+            child: Column(
+              children: [
+                Icon(
+                  Icons.error,
+                  color: Colors.red,
+                  size: 40,
+                ),
+                SizedBox(height: 10),
+                Text('The Username or Password is Incorrect. Try again',
+                textAlign:TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: Styles.headingFont,
+                  fontWeight: FontWeight.bold,
+                ),
+                  ),
+              ],
+            ),
+          ),
+          actions: [
+            SizedBox(
+              height: 40,
+              width: 90,
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Styles.primaryColor,
+                ),
+                child: Text('OK',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontFamily: Styles.headingFont,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+          ],
+        );
+      },
+    );
+
+  }
+@override
   void dispose() {
     _usernameController.dispose();
     _passwordController.dispose();
@@ -177,6 +240,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: TextFormField(
                           controller: _passwordController,
                           maxLines: 1,
+                          obscureText: true,
                           decoration: InputDecoration(
                             hintText: 'Confirm your password',
                             prefixIcon: Icon(
@@ -225,15 +289,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 50,
                         child: ElevatedButton(
                           onPressed: (){
-
-                            Provider.of<UserModel>(context, listen: false).fetchUserDetail(_usernameController.text);
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ProfilePage(),
-                                ),
-                              );
-                            
+                            if (_usernameController.text.isEmpty ||
+                                _passwordController.text.isEmpty) {
+                              setState(() {
+                                _error = true;
+                              });
+                              _showErrorDialog();
+                            } else {
+                              fetchUserDetail(_usernameController.text);
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Styles.primaryColor,
