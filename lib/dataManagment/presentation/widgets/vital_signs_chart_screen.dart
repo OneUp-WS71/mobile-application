@@ -4,46 +4,35 @@ import 'package:mobile_application/common/widgets/custom_app_bar.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'dart:math';
 
+import 'package:mobile_application/security/application/datasources/provider.dart';
+import 'package:mobile_application/security/application/models/user_userdb.dart';
+import 'package:provider/provider.dart';
+
 class VitalSignsChartScreen extends StatelessWidget {
   // Datos ficticios para los gráficos
-  List<FlSpot> temperatureData = [
-    FlSpot(0, 36),
-    FlSpot(1, 36.5),
-    FlSpot(2, 37),
-    FlSpot(3, 37.2),
-    FlSpot(4, 36.8),
-    FlSpot(5, 36.5),
-    FlSpot(6, 36.7),
-    FlSpot(7, 37),
-    FlSpot(8, 37.5),
-  ];
+  List<FlSpot> temperatureData = [];
 
-  List<FlSpot> heartRateData = [
-    FlSpot(0, 65),
-    FlSpot(1, 68),
-    FlSpot(2, 70),
-    FlSpot(3, 72),
-    FlSpot(4, 68),
-    FlSpot(5, 67),
-    FlSpot(6, 69),
-    FlSpot(7, 71),
-    FlSpot(8, 70),
-  ];
+  List<FlSpot> heartRateData = [];
 
-  List<FlSpot> breathingFrequencyData = [
-    FlSpot(0, 16),
-    FlSpot(1, 17),
-    FlSpot(2, 16),
-    FlSpot(3, 15),
-    FlSpot(4, 17),
-    FlSpot(5, 18),
-    FlSpot(6, 16),
-    FlSpot(7, 15),
-    FlSpot(8, 16),
-  ];
+  List<FlSpot> breathingFrequencyData = [];
 
+  VitalSignsChart(List<Report2> reports) {
+    // Map the reports to FlSpot data
+    for (int i = 0; i < reports.length; i++) {
+      final report = reports[i];
+      temperatureData.add(FlSpot(i.toDouble(), report.temperature.toDouble()));
+      heartRateData.add(FlSpot(i.toDouble(), report.heartRate.toDouble()));
+      breathingFrequencyData.add(FlSpot(i.toDouble(), report.breathingFrequency.toDouble()));
+    }
+  }
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserModel>(context).username;
+    if (user != null && user.patients.isNotEmpty) {
+      final reports = user.patients[0].reports;
+      print(reports);
+      VitalSignsChart(reports);
+    }
     return Scaffold(
       appBar: CustomAppBar(
           title: 'Vital Signs'

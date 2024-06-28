@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_application/application/infrastructure/datasources/userdb_datasource.dart';
 import 'package:mobile_application/common/styles/styles.dart';
 import 'package:mobile_application/common/widgets/custom_app_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_application/dataManagment/presentation/widgets/measure_box.dart';
 import 'package:mobile_application/common/widgets/navigation_bar.dart';
+import 'package:mobile_application/security/application/models/user_userdb.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../injections.dart';
@@ -24,6 +26,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   var _indicatorSlider = 1;
   final _pageController = PageController(initialPage: 1);
+  
 
   //Lista de vital signs
   List<Map<String,dynamic>>  vitalSignsData = [
@@ -62,23 +65,25 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _updateVitalSignsData();
   }
-  void _updateVitalSignsData() {
+  void _updateVitalSignsData(UserUserDb user) {
     for (var vitalSign in vitalSignsData) {
       String value = 'Stable';
       if (vitalSign['title'] == 'Heart Rate') {
-        int heartRate = int.tryParse(vitalSign['measure'].split(' ')[0]) ?? 0;
+        int heartRate = user.patients[0].reports.last.heartRate.toInt();
+        vitalSign['measure'] = '${user.patients[0].reports.last.heartRate.toInt()} bpm';
         if (heartRate < 60 || heartRate > 100) {
           value = 'Unstable';
         }
       } else if (vitalSign['title'] == 'Temperature') {
-        double temperature = double.tryParse(vitalSign['measure'].split(' ')[0]) ?? 0;
+        double temperature = user.patients[0].reports.last.temperature;
+        vitalSign['measure'] = '${user.patients[0].reports.last.temperature.toInt()} °C';
         if (temperature < 36 || temperature > 37) {
           value = 'Unstable';
         }
       } else if (vitalSign['title'] == 'Breathing frequency') {
-        int breathingFreq = int.tryParse(vitalSign['measure'].split(' ')[0]) ?? 0;
+        int breathingFreq = user.patients[0].reports.last.breathingFrequency.toInt();
+        vitalSign['measure'] = '${user.patients[0].reports.last.breathingFrequency.toInt()} rpm';
         if (breathingFreq < 12 || breathingFreq > 20) {
           value = 'Unstable';
         }
@@ -93,6 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (user != null && user.patients.isNotEmpty) {
       weight = user.patients[0].weight;
       height = user.patients[0].height;
+      _updateVitalSignsData(user);
     }
     //calculate BMI
     if (height != 0) {
