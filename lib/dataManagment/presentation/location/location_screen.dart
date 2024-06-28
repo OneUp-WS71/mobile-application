@@ -4,10 +4,13 @@ import 'package:latlong2/latlong.dart';
 import 'package:mobile_application/common/styles/styles.dart';
 import 'package:mobile_application/common/widgets/custom_app_bar.dart';
 import 'package:mobile_application/common/widgets/navigation_bar.dart';
+import 'package:provider/provider.dart';
+
+import '../../../security/application/datasources/provider.dart';
 
 
 const MapboxAccessToken = 'pk.eyJ1IjoiY3Jpc29yczA5IiwiYSI6ImNseHMzcGIzMDE2dXQyd3BrbzRxZDJpemkifQ.DflG0_KHMBjn7c26appWIg';
-const myPosition = LatLng(-12.076832832450908, -77.09348179398481); // Coordenadas de Lima, Perú
+var myPosition = const LatLng(-12.076832832450908, -77.09348179398481); // Coordenadas de Lima, Perú
 
 class LocationScreen extends StatefulWidget {
   const LocationScreen({Key? key}) : super(key: key);
@@ -29,6 +32,10 @@ class _LocationScreenState extends State<LocationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserModel>(context).username;
+    if (user != null && user.patients.isNotEmpty) {
+      myPosition = LatLng(double.parse(user.patients[0].reports.last.latitude), double.parse(user.patients[0].reports.last.longitude));
+    }
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Location',

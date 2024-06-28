@@ -32,6 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> fetchUserDetail(String username) async {
     print('---username--- $username');
     try {
+      Provider.of<UserModel>(context, listen: false).fetchUserDetail(username);
       userDetail = await UserDataProvider().getUserByName(username);
       print('---userDetail--- $userDetail');
       if (userDetail?.username == _usernameController.text &&

@@ -94,9 +94,9 @@ class Patient {
 
 class Report2 {
     final int id;
-    final int heartRate;
-    final int breathingFrequency;
-    final int temperature;
+    final double heartRate;
+    final double breathingFrequency;
+    final double temperature;
     final String longitude;
     final String latitude;
     final String reportTime;
