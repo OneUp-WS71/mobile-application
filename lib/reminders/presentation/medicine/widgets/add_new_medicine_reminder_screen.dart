@@ -25,6 +25,7 @@ class _AddNewMedicineReminderScreenState extends State<AddNewMedicineReminderScr
     'Saturday': false,
     'Sunday': false,
   };
+ bool _isErrorVisible = false;
 
   void _selectTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
@@ -77,23 +78,37 @@ class _AddNewMedicineReminderScreenState extends State<AddNewMedicineReminderScr
       });
   }
 
-  void _saveReminder(){
-    final nowTime= DateTime.now();
-
-    final reminder= MedicineReminder(
+  void _saveReminder() {
+    if (_validateInputs()) {
+      final nowTime = DateTime.now();
+      final reminder = MedicineReminder(
         id: UniqueKey().toString(),
         title: _medicineNameController.text,
         time: DateTime(nowTime.year, nowTime.month, nowTime.day, selectedTime.hour, selectedTime.minute),
         dosage: _dosageController.text,
         frequency: daysOfWeek.keys.where((key) => daysOfWeek[key]!).toList(),
-    );
+      );
+
       final saveReminder = GetIt.instance<SaveReminder>();
-      saveReminder(reminder).then((_){
+      saveReminder(reminder).then((_) {
         Navigator.pop(context);
-      }).catchError((error){
-      print ('Error saving reminder: $error');
+      }).catchError((error) {
+        print('Error saving reminder: $error');
+      });
+    } else {
+      setState(() {
+        _isErrorVisible = true;
       });
     }
+  }
+  bool _validateInputs() {
+    if (_medicineNameController.text.isEmpty ||
+        _dosageController.text.isEmpty ||
+        daysOfWeek.values.every((isChecked) => !isChecked)) {
+      return false;
+    }
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,8 +127,7 @@ class _AddNewMedicineReminderScreenState extends State<AddNewMedicineReminderScr
               color: Styles.primaryColor,
             )),
       ),
-      content: Flexible(
-        child: SingleChildScrollView(
+      content: SingleChildScrollView(
             child: Column(children: [
               Padding(
               padding: EdgeInsets.only(right: screenWidth * 0.30),
@@ -264,7 +278,27 @@ class _AddNewMedicineReminderScreenState extends State<AddNewMedicineReminderScr
                   );
                 }).toList(),
               ),
-            ])),
+              if(_isErrorVisible)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+            Icon(Icons.error, color: Colors.red),
+               SizedBox(width: 10),
+              Text(
+            'Please complete all fields.',
+            style: TextStyle(
+              color: Colors.red,
+              fontFamily: Styles.headingFont,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
+    ),
+            ])
       ),
       actions: [
         Row(

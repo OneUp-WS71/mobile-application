@@ -17,7 +17,6 @@ class UserModel with ChangeNotifier {
   Future<void> fetchUserDetail(String username) async {
     try{
         _username = await UserDataProvider().getUserByName(username);
-        
     }
     catch(e){
         _error = true;

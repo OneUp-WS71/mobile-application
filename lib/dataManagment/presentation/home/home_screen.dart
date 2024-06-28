@@ -6,12 +6,12 @@ import 'package:mobile_application/dataManagment/presentation/widgets/measure_bo
 import 'package:mobile_application/common/widgets/navigation_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
 import '../../../injections.dart';
 import '../../../security/application/datasources/provider.dart';
 import '../../../security/application/datasources/user_datasources.dart';
 import '../../application/use_cases/get_report_by_id.dart';
 import '../widgets/vital_signs_box.dart';
+
 
 class HomeScreen extends StatefulWidget {
   final int ? userId;
@@ -26,75 +26,79 @@ class _HomeScreenState extends State<HomeScreen> {
   final _pageController = PageController(initialPage: 1);
 
   //Lista de vital signs
-  List<Map<String,dynamic>> vitalSignsData=[];
+  List<Map<String,dynamic>>  vitalSignsData = [
+    {
+      'title': 'Heart Rate',
+      'measure': '60 bpm', // cambiar el valor aqui traido del backend '${heart rate} kg',
+      'value': 'Stable',
+      'icon': Icons.favorite,
+      'iconColor': Colors.red,
+      'image': 'assets/images/Latido.png',
+    },
+    {
+      'title': 'Temperature',
+      'measure': '40 °C',// cambiar el valor aqui traido del backend
+      'value': 'Stable',
+      'icon': Icons.thermostat,
+      'iconColor': Colors.lightBlueAccent,
+      'image': 'assets/images/temperature.png',
+    },
+    {
+      'title': 'Breathing frequency',
+      'measure': '100 rpm', // cambiar el valor aqui traido del backend
+      'value': 'Stable',
+      'icon': Icons.air_rounded,
+      'iconColor': Colors.blueAccent,
+      'image': 'assets/images/freRespiratorio.png',
+    },
+  ];
 
   //variables para peso y altura
-  double  weight=0.0;
-  double  height=0.0;
+  double  weight=0;
+  double  height=0;
+  double bmi = 0;
+
 
   @override
   void initState() {
     super.initState();
-    _fetchReportData();
-    _fetchUserData();
+    _updateVitalSignsData();
   }
-  Future<void>_fetchReportData() async{
-    try {
-      final report = await serviceLocator<GetReportById>()(widget.userId!);
-      setState(() {
-        vitalSignsData = [
-      {
-        'title': 'Heart Rate',
-        'measure': '${report.heartRate} bpm',
-        'value': 'Stable',
-        'icon': Icons.favorite,
-        'iconColor': Colors.red,
-        'image': 'assets/images/Latido.png',
-      },
-      {
-        'title': 'Temperature',
-        'measure': '${report.temperature} °C',
-        'value': 'Stable',
-        'icon': Icons.thermostat,
-        'iconColor': Colors.lightBlueAccent,
-        'image': 'assets/images/temperature.png',
-      },
-      {
-        'title': 'Breathing frequency',
-        'measure': '${report.breathingFrequency} rpm',
-        'value': 'Stable',
-        'icon': Icons.air_rounded,
-        'iconColor': Colors.blueAccent,
-        'image': 'assets/images/freRespiratorio.png',
-      },
-    ];
-    });
-    } catch (e) {
-      print('Failed to fetch report: $e');
-    }
-  }
-
-  Future<void> _fetchUserData() async {
-    try {
-      final user = await UserDataProvider().getUserByName('username');
-      if (user.patients.isNotEmpty) {
-        final patient = user.patients.first;
-        setState(() {
-          weight = patient.weight;
-          height = patient.height;
-        });
+  void _updateVitalSignsData() {
+    for (var vitalSign in vitalSignsData) {
+      String value = 'Stable';
+      if (vitalSign['title'] == 'Heart Rate') {
+        int heartRate = int.tryParse(vitalSign['measure'].split(' ')[0]) ?? 0;
+        if (heartRate < 60 || heartRate > 100) {
+          value = 'Unstable';
+        }
+      } else if (vitalSign['title'] == 'Temperature') {
+        double temperature = double.tryParse(vitalSign['measure'].split(' ')[0]) ?? 0;
+        if (temperature < 36 || temperature > 37) {
+          value = 'Unstable';
+        }
+      } else if (vitalSign['title'] == 'Breathing frequency') {
+        int breathingFreq = int.tryParse(vitalSign['measure'].split(' ')[0]) ?? 0;
+        if (breathingFreq < 12 || breathingFreq > 20) {
+          value = 'Unstable';
+        }
       }
-    } catch (e) {
-      print('Failed to fetch user data: $e');
+      vitalSign['value'] = value;
     }
-
   }
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context).username;
-    weight= user!.patients[0].weight;
-    height = user!.patients[0].height;
+    if (user != null && user.patients.isNotEmpty) {
+      weight = user.patients[0].weight;
+      height = user.patients[0].height;
+    }
+    //calculate BMI
+    if (height != 0) {
+      bmi = weight / ((height) * (height));
+    }
+
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('EEEE, MMMM dd').format(now);
     return Scaffold(
@@ -150,17 +154,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     MeasureBox(
                       title: 'Weight',
                       icon: Icons.fitness_center,
-                      value: '$weight kg',
+                      value: '${weight.toStringAsFixed(1)} kg',
                     ),
                     MeasureBox(
                       title: 'Height',
                       icon: Icons.height,
-                      value: '$height cm',
+                      value: '${height.toStringAsFixed(1)}  m',
                     ),
                     MeasureBox(
                       title: 'BMI',
                       icon: Icons.monitor_weight,
-                      value: (weight / ((height / 100) * (height / 100))).toStringAsFixed(1),
+                      value: bmi.toStringAsFixed(1),
+                      weightLevel: bmi < 18.5
+                          ? 'Underweight'
+                          : bmi < 24.9
+                          ? 'Normal'
+                          : bmi < 29.9
+                          ? 'Overweight'
+                          : 'Obese',
                     ),
                   ],
                 ),
