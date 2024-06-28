@@ -330,7 +330,7 @@ class _RegisterKeeperDataScreenState extends State<RegisterKeeperDataScreen> {
           )
       ),
       const SizedBox(height: 20),
-      Container(
+      SizedBox(
         width: 250,
         height: 50,
         child: ElevatedButton(
@@ -342,7 +342,8 @@ class _RegisterKeeperDataScreenState extends State<RegisterKeeperDataScreen> {
               date: _dateController.text, 
               phone: _phoneController.text,
               weight: double.parse(_weightController.text), 
-              height: double.parse(_heightController.text));
+              height: double.parse(_heightController.text),
+              reports: []);
             print('-----id------ ${Provider.of<UserModel>(context, listen: false).username2?.id}');
             await Provider.of<UserModel>(context, listen: false).postPatientRegister(patient, Provider.of<UserModel>(context, listen: false).username2!.id);
             Navigator.push(
@@ -351,6 +352,12 @@ class _RegisterKeeperDataScreenState extends State<RegisterKeeperDataScreen> {
             );
 
           },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Styles.primaryColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ),
           child: Text(
             'Register',
             style: TextStyle(
@@ -358,12 +365,6 @@ class _RegisterKeeperDataScreenState extends State<RegisterKeeperDataScreen> {
               fontSize: 20,
               fontFamily: Styles.headingFont,
               fontWeight: FontWeight.bold,
-            ),
-          ),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Styles.primaryColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
             ),
           ),
         ),

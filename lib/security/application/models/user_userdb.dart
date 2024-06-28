@@ -56,6 +56,7 @@ class Patient {
     final String phone;
     final double weight;
     final double height;
+    final List<Report2> reports;
 
     Patient({
         required this.id,
@@ -65,6 +66,7 @@ class Patient {
         required this.phone,
         required this.weight,
         required this.height,
+        required this.reports,
     });
 
     factory Patient.fromJson(Map<String, dynamic> json) => Patient(
@@ -75,6 +77,7 @@ class Patient {
         phone: json["phone"],
         weight: json["weight"],
         height: json["height"],
+        reports: List<Report2>.from(json["reports"].map((x) => Report2.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
@@ -85,5 +88,46 @@ class Patient {
         "phone": phone,
         "weight": weight,
         "height": height,
+        "reports": List<dynamic>.from(reports.map((x) => x.toJson())),
+    };
+}
+
+class Report2 {
+    final int id;
+    final int heartRate;
+    final int breathingFrequency;
+    final int temperature;
+    final String longitude;
+    final String latitude;
+    final String reportTime;
+
+    Report2({
+        required this.id,
+        required this.heartRate,
+        required this.breathingFrequency,
+        required this.temperature,
+        required this.longitude,
+        required this.latitude,
+        required this.reportTime,
+    });
+
+    factory Report2.fromJson(Map<String, dynamic> json) => Report2(
+        id: json["id"],
+        heartRate: json["heartRate"],
+        breathingFrequency: json["breathingFrequency"],
+        temperature: json["temperature"],
+        longitude: json["longitude"],
+        latitude: json["latitude"],
+        reportTime: json["reportTime"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "heartRate": heartRate,
+        "breathingFrequency": breathingFrequency,
+        "temperature": temperature,
+        "longitude": longitude,
+        "latitude": latitude,
+        "reportTime": reportTime,
     };
 }
